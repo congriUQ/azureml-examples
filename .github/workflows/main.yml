@@ -21,11 +21,11 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # Set default subscription and workspace
-    - name: Set Azure defaults
-      run: |
-        az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-        az configure --defaults workspace=${{ secrets.AZURE_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
+#    # Set default subscription and workspace
+#    - name: Set Azure defaults
+#      run: |
+#        az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+#        az configure --defaults workspace=${{ secrets.AZURE_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
 
     # Submit the Azure ML job
     - name: Submit Azure ML job
