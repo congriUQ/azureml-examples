@@ -1,0 +1,19 @@
+# Ignore all .pyc and __pycache__ folders
+__pycache__/
+*.pyc
+
+# Ignore version control metadata
+.git/
+.gitignore
+
+# Ignore tests
+tests/
+*.test.py
+
+# Ignore large local data files
+data/
+*.csv
+*.parquet
+
+# Ignore notebooks
+*.ipynb
