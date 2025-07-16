@@ -1,7 +1,7 @@
 experiment_name: diabetes
 description: "Simple example to show how model training works in AML"
 compute: azureml:A1v2
-environment: diabetes
+environment: azureml:diabetes@latest
 command: >-
   python train.py --training_data ${{inputs.training_data}}
 display_name: model-training-diabetes
