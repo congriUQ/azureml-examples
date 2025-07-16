@@ -8,4 +8,4 @@ display_name: model-training-diabetes
 inputs:
   training_data:
     type: mltable
-    path: azureml:diabetes_dataset@latest
+    path: azureml:diabetes-dataset@latest
