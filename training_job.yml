@@ -7,5 +7,5 @@ command: >-
 display_name: model-training-diabetes
 inputs:
   training_data:
-    type: uri_file
+    type: mltable
     path: azureml:diabetes_dataset@latest
