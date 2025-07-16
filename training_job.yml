@@ -5,6 +5,7 @@ environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu:1
 command: >-
   python train.py --training_data ${{inputs.training_data}}
 display_name: model-training-diabetes
+code: .
 inputs:
   training_data:
     type: mltable
