@@ -3,7 +3,7 @@ description: "Simple example to show how model training works in AML"
 compute: azureml:A1v2
 identity:
   type: managed
-environment: azureml://registries/azureml/environments/sklearn-1.5/labels/latest
+environment: azureml://registries/azureml/environments/sklearn-1.5/versions/28
 command: >-
   python train.py --training_data ${{inputs.training_data}}
 display_name: model-training-diabetes
