@@ -5,6 +5,7 @@ __pycache__/
 # Ignore version control metadata
 .git/
 .gitignore
+.github/
 
 # Ignore tests
 tests/
