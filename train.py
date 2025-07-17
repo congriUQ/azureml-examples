@@ -45,11 +45,10 @@ y_pred = clf.predict(x_test)
 print(classification_report(y_test, y_pred))
 
 print(f"env:\n\n{os.environ}")
+print(f"context:\n\n\n{os.environ.get('AZUREML_CR_AZUREML_CONTEXT')}")
 ml_client = MLClient(
     credential=DefaultAzureCredential(),
-    subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
-    resource_group=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
-    workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME")
+    **os.environ.get("AZUREML_CR_AZUREML_CONTEXT")
 )
 
 model = Model(
