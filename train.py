@@ -7,6 +7,7 @@ from sklearn.metrics import classification_report
 from azure.ai.ml import MLClient
 from azure.identity import DefaultAzureCredential
 from azure.ai.ml.entities import Model
+from azure.ai.ml.constants import ModelType
 from pickle import dump
 
 
@@ -43,18 +44,15 @@ with open("model.pkl", "wb") as f:
 y_pred = clf.predict(x_test)
 print(classification_report(y_test, y_pred))
 
-ml_client = MLClient(
-    DefaultAzureCredential(),
-    subscription_id="your-subscription-id",
-    resource_group_name="your-resource-group",
-    workspace_name="your-workspace"
-)
+ml_client = MLClient.from_config(DefaultAzureCredential())
 
 model = Model(
     path="./model.pkl",
     name="logistic_regression",
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression"},
-    type="mlflow_model",
+    type=ModelType.MLFLOW,
     properties=classification_report(y_test, y_pred, output_dict=True)
 )
+
+registered_model = ml_client.models.create_or_update(model)
