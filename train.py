@@ -1,3 +1,4 @@
+import os
 import mltable
 import argparse
 from sklearn.model_selection import train_test_split
@@ -36,7 +37,6 @@ x_test = scaler.transform(x_test)
 clf = LogisticRegression()
 clf.fit(x_train, y_train)
 
-from pickle import dump
 with open("model.pkl", "wb") as f:
     dump(clf, f, protocol=5)
 
@@ -44,7 +44,13 @@ with open("model.pkl", "wb") as f:
 y_pred = clf.predict(x_test)
 print(classification_report(y_test, y_pred))
 
-ml_client = MLClient.from_config(DefaultAzureCredential())
+print(f"env:\n\n{os.environ}")
+ml_client = MLClient(
+    credential=DefaultAzureCredential(),
+    subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
+    resource_group=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
+    workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME")
+)
 
 model = Model(
     path="./model.pkl",
