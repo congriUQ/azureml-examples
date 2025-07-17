@@ -32,6 +32,7 @@ scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
+
 # Train logistic regression
 clf = LogisticRegression()
 clf.fit(x_train, y_train)
