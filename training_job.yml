@@ -1,6 +1,11 @@
 experiment_name: diabetes
 description: "Simple example to show how model training works in AML"
 compute: azureml:A1v2
+identity:
+  type: user_identity
+  user_assigned_identities:
+    - /subscriptions/a2bb208c-83ba-4293-b9e6-9834d93f991e/resourcegroups/sales-ai/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sales-ai-mi
+
 environment: azureml:diabetes@latest
 command: >-
   python train.py --training_data ${{inputs.training_data}}
