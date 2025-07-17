@@ -52,6 +52,7 @@ print(cred)
 print(dir(cred))
 token = cred.get_token("https://management.azure.com/.default")
 print("Token retrieved successfully:", token.token)
+
 ml_client = MLClient(
     credential=cred,
     subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
