@@ -65,7 +65,7 @@ model = Model(
     name="logistic_regression",
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression"},
-    type=ModelType.MLFLOW,
+    type="custom_model",
     properties=classification_report(y_test, y_pred, output_dict=True)
 )
 
