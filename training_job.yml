@@ -4,7 +4,7 @@ compute: azureml:A1v2
 identity:
   type: managed
 
-environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38@latest
+environment: azureml:sklearn-1.5@latest
 command: >-
   python train.py --training_data ${{inputs.training_data}}
 display_name: model-training-diabetes
