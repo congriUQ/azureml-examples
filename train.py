@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 from azure.ai.ml import MLClient
-from azure.identity import DefaultAzureCredential
+from azure.identity import ManagedIdentityCredential
 from azure.ai.ml.entities import Model
 from azure.ai.ml.constants import ModelType
 from pickle import dump
@@ -30,7 +30,6 @@ x_train, x_test, y_train, y_test = train_test_split(
     stratify=diabetes_dataset["Outcome"],
 )
 
-
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
@@ -48,8 +47,11 @@ print(classification_report(y_test, y_pred))
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 print(f"context:\n\n\n{os.environ.get('AZUREML_CR_AZUREML_CONTEXT')}")
+cred = ManagedIdentityCredential()
+print(cred)
+print(dir(cred))
 ml_client = MLClient(
-    credential=DefaultAzureCredential(),
+    credential=cred,
     subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
     resource_group_name=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
     workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME")
