@@ -51,9 +51,10 @@ ml_client = MLClient(
 )
 
 model = Model(
-    path="./model.pkl",   # Path to model file
-    name="logistic_regression",       # Model name
+    path="./model.pkl",
+    name="logistic_regression",
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression"},
-    type="mlflow_model"         # Or 'custom_model', 'triton_model' etc.
+    type="mlflow_model",
+    properties=classification_report(y_test, y_pred, output_dict=True)
 )
