@@ -45,7 +45,7 @@ with open("model.pkl", "wb") as f:
 y_pred = clf.predict(x_test)
 print(classification_report(y_test, y_pred))
 
-print(f"env:\n\n{json.dumps(os.environ, indent=4)}")
+print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 print(f"context:\n\n\n{os.environ.get('AZUREML_CR_AZUREML_CONTEXT')}")
 ml_client = MLClient(
     credential=DefaultAzureCredential(),
