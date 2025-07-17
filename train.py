@@ -30,6 +30,7 @@ x_train, x_test, y_train, y_test = train_test_split(
     stratify=diabetes_dataset["Outcome"],
 )
 
+
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
