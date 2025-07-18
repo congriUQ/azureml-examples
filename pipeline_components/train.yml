@@ -11,4 +11,4 @@ outputs:
 code: ../src
 environment: azureml:diabetes@latest
 command: >
-  python train.py --cleaned_data_path ${{inputs.cleaned_data_path}} --model_path ${{outputs.model_path}}
+  python train.py --cleaned_data_path ${{inputs.preprocessed_data}} --model_path ${{outputs.model_path}}
