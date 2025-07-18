@@ -1,13 +1,14 @@
 import json
 import os
-import joblib
+import pickle
 
 
 def init():
     global model
     # The model file is automatically downloaded to this directory
-    model_path = os.path.join(os.environ["AZUREML_MODEL_DIR"], "model.joblib")
-    model = joblib.load(model_path)
+    model_path = os.path.join(os.environ["AZUREML_MODEL_DIR"], "model.pkl")
+    with open("model.pkl", "rb") as f:
+        model = pickle.load(f)
     print("Model loaded successfully.")
 
 
