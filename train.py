@@ -75,17 +75,13 @@ endpoint = ManagedOnlineEndpoint(
 
 print(f"endpoint: {endpoint}")
 
-import logging
-# Enable debug logging
-logging.basicConfig(level=logging.DEBUG)
-
 ml_client.begin_create_or_update(endpoint).result()
 
 deployment = ManagedOnlineDeployment(
     name="blue",  # deployment name
     endpoint_name="diabetes-endpoint",
     model=model,
-    environment="azureml:diabetes@latest",
+    environment="azureml:diabetes:4",
     code_configuration=CodeConfiguration(
         code="./",  # folder with score.py
         scoring_script="score.py"
