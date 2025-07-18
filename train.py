@@ -54,7 +54,7 @@ ml_client = MLClient(
     credential=cred,
     subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
     resource_group_name=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
-    workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME")
+    workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
 )
 
 model = Model(
@@ -63,14 +63,13 @@ model = Model(
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression"},
     type="custom_model",
-    properties=classification_report(y_test, y_pred, output_dict=True)
+    properties=classification_report(y_test, y_pred, output_dict=True),
 )
 
 registered_model = ml_client.models.create_or_update(model)
 
 endpoint = ManagedOnlineEndpoint(
-    name="diabetes-endpoint",
-    description="Managed endpoint for Diabetes model"
+    name="diabetes-endpoint", description="Managed endpoint for Diabetes model"
 )
 
 print(f"endpoint: {endpoint}")
@@ -84,10 +83,10 @@ deployment = ManagedOnlineDeployment(
     environment="azureml:diabetes:5",
     code_configuration=CodeConfiguration(
         code="./",  # folder with score.py
-        scoring_script="score.py"
+        scoring_script="score.py",
     ),
     instance_type="Standard_D2as_v4",
-    instance_count=1
+    instance_count=1,
 )
 
 
@@ -97,6 +96,5 @@ ml_client.begin_create_or_update(deployment).result()
 
 # Set this deployment as default
 ml_client.online_endpoints.begin_update(
-    endpoint_name="diabetes-endpoint",
-    traffic={"blue": 100}
+    endpoint_name="diabetes-endpoint", traffic={"blue": 100}
 )
