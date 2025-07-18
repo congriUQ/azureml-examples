@@ -90,6 +90,8 @@ deployment = ManagedOnlineDeployment(
     instance_count=1
 )
 
+print(f"deployment: {deployment}")
+
 ml_client.begin_create_or_update(deployment).result()
 
 # Set this deployment as default
