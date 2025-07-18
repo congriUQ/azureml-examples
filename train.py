@@ -47,12 +47,8 @@ y_pred = clf.predict(x_test)
 print(classification_report(y_test, y_pred))
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
-print(f"context:\n\n\n{os.environ.get('AZUREML_CR_AZUREML_CONTEXT')}")
 cred = ManagedIdentityCredential()
-print(cred)
-print(dir(cred))
 token = cred.get_token("https://management.azure.com/.default")
-print("Token retrieved successfully:", token.token)
 
 ml_client = MLClient(
     credential=cred,
@@ -92,7 +88,7 @@ deployment = ManagedOnlineDeployment(
     instance_count=1
 )
 
-ml_client.begin_create_or_update(deployment)
+ml_client.begin_create_or_update(deployment).result()
 
 # Set this deployment as default
 ml_client.online_endpoints.begin_update(
