@@ -32,6 +32,7 @@ jobs:
       run: |
         az ml component create --file ./pipeline_components/preprocess.yml --workspace-name ${{ secrets.AML_WORKSPACE_NAME }}
         az ml component create --file ./pipeline_components/train.yml --workspace-name ${{ secrets.AML_WORKSPACE_NAME }}
+        az ml job create --file pipeline.yml --set is_draft=true --workspace-name ${{ secrets.AML_WORKSPACE_NAME }}
 
 #    # Submit the Azure ML job
 #    - name: Submit Azure ML job

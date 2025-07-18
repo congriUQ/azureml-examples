@@ -1,24 +1,20 @@
 type: pipeline
-description: "Preprocess-train-test-deploy"
-
-inputs:
-  raw_data:
-    type: mltable
-    path: azureml:diabetes-dataset@latest
+description: preprocess-train-test-deploy
+compute: azureml:A1v2
 
 jobs:
   preprocess:
     type: command
-    component: file:./components/preprocess.yml
+    component: azureml:preprocess:@latest
     inputs:
-      raw_data: ${{parent.inputs.raw_data}}
+      raw_data: azureml:diabetes-dataset@latest
     outputs:
-      preprocessed_data: ${{parent.outputs.preprocessed_data}}
+      cleaned_data_path: azureml:cleaned_data_path
 
   train:
     type: command
-    component: file:./components/train.yml
+    component: azureml:train:2
     inputs:
-      preprocessed_data: ${{parent.jobs.preprocess.outputs.preprocessed_data}}
+      training_data: ${{parent.jobs.preprocess.outputs.cleaned_data_path}}
     outputs:
-      model_output: ${{parent.outputs.model}}
+      model_output: azureml:model_output_folder
