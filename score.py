@@ -15,6 +15,7 @@ def run(data):
     try:
         # Parse input JSON
         input_data = json.loads(data)
+        print(f"input_data: {input_data}")
         # Assuming the input JSON has a key called "inputs" with a list of features
         predictions = model.predict(input_data["inputs"])
         # Return as JSON

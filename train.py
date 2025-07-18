@@ -73,7 +73,9 @@ endpoint = ManagedOnlineEndpoint(
     description="Managed endpoint for Diabetes model"
 )
 
-ml_client.begin_create_or_update(endpoint)
+print(f"endpoint: {endpoint}")
+
+ml_client.begin_create_or_update(endpoint).result()
 
 deployment = ManagedOnlineDeployment(
     name="blue",  # deployment name
