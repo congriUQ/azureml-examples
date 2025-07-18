@@ -86,7 +86,7 @@ deployment = ManagedOnlineDeployment(
         code="./",  # folder with score.py
         scoring_script="score.py"
     ),
-    instance_type="A1v2inst",
+    instance_type="Standard_D2as_v4",
     instance_count=1
 )
 
