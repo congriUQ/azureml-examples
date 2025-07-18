@@ -8,9 +8,10 @@ from sklearn.metrics import classification_report
 from azure.ai.ml import MLClient
 from azure.identity import ManagedIdentityCredential
 from azure.ai.ml.entities import Model
-from azure.ai.ml.constants import ModelType
 from pickle import dump
 import json
+from azure.ai.ml.entities import ManagedOnlineEndpoint
+from azure.ai.ml.entities import ManagedOnlineDeployment, CodeConfiguration
 
 
 parser = argparse.ArgumentParser()
@@ -70,3 +71,31 @@ model = Model(
 )
 
 registered_model = ml_client.models.create_or_update(model)
+
+endpoint = ManagedOnlineEndpoint(
+    name="diabetes-endpoint",
+    description="Managed endpoint for Diabetes model"
+)
+
+ml_client.begin_create_or_update(endpoint)
+
+deployment = ManagedOnlineDeployment(
+    name="blue",  # deployment name
+    endpoint_name="diabetes-endpoint",
+    model=model,
+    environment="azureml:diabetes@latest",
+    code_configuration=CodeConfiguration(
+        code="./",  # folder with score.py
+        scoring_script="score.py"
+    ),
+    instance_type="A1v2inst",
+    instance_count=1
+)
+
+ml_client.begin_create_or_update(deployment)
+
+# Set this deployment as default
+ml_client.online_endpoints.begin_update(
+    endpoint_name="diabetes-endpoint",
+    traffic={"blue": 100}
+)
