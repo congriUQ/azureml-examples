@@ -75,6 +75,10 @@ endpoint = ManagedOnlineEndpoint(
 
 print(f"endpoint: {endpoint}")
 
+import logging
+# Enable debug logging
+logging.basicConfig(level=logging.DEBUG)
+
 ml_client.begin_create_or_update(endpoint).result()
 
 deployment = ManagedOnlineDeployment(
