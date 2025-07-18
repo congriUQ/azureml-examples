@@ -3,12 +3,13 @@ display_name: Train Model
 type: command
 description: Train the logistic regression for Diabetes data
 inputs:
-  preprocessed_data:
+  prepared_data:
     type: uri_folder
 outputs:
-  model_path:
-    type: uri_folder
+  model:
+    type: mlflow_model
+    mode: upload
 code: ../src/train.py
 environment: azureml:diabetes@latest
 command: >
-  python train.py --cleaned_data_path ${{inputs.preprocessed_data}} --model_path ${{outputs.model_path}}
+  python train.py --cleaned_data_path ${{inputs.prepared_data}}

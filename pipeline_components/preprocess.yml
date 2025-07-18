@@ -6,8 +6,7 @@ inputs:
   raw_data:
     type: uri_folder
 outputs:
-  cleaned_data_path:
-    type: uri_folder
+  prepared_data:
 code: ../src/preprocess.py
 environment: azureml:diabetes@latest
 command: >

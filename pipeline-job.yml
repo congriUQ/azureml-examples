@@ -1,0 +1,15 @@
+type: pipeline
+
+experiment_name: diabetes-pipeline
+display_name: diabetes-train-job
+description: This pipeline demonstrates how to train a machine learning classifier over the diabetes dataset.
+
+compute: A1v2
+component: pipeline.yml
+inputs:
+  raw_data:
+    type: uri_folder
+outputs:
+  model:
+    type: mlflow_model
+    mode: upload

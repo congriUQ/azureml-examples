@@ -1,20 +1,32 @@
 type: pipeline
-description: preprocess-train-test-deploy
+name: preprocess_train_test_deploy
 compute: azureml:A1v2
+
+inputs:
+  raw_data:
+    type: uri_folder
+
+outputs:
+  model:
+    type: mlflow_model
+    mode: upload
 
 jobs:
   preprocess:
     type: command
-    component: azureml:preprocess:@latest
+    component: azureml:preprocess@latest
     inputs:
-      raw_data: azureml:diabetes-dataset@latest
+      raw_data: ${{parent.inputs.raw_data}}
     outputs:
-      cleaned_data_path: azureml:cleaned_data_path
+      prepared_data: ${{parent.outputs.prepared_data}}
 
   train:
     type: command
-    component: azureml:train:2
+    component: azureml:train@latest
     inputs:
-      training_data: ${{parent.jobs.preprocess.outputs.cleaned_data_path}}
+      prepared_data: ${{parent.jobs.preprocess.outputs.prepared_data}}
     outputs:
-      model_output: azureml:model_output_folder
+      model:
+        mode: upload
+        type: mlflow_model
+        path: ${{parent.outputs.model}}
