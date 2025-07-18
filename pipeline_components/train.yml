@@ -1,0 +1,12 @@
+name: train
+display_name: Train Model
+type: command
+description: Train the logistic regression for Diabetes data
+inputs:
+  preprocessed_data_path: uri_folder
+outputs:
+  model_path: uri_folder
+code: ../src
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu@latest
+command: >
+  python train.py --cleaned_data_path ${{inputs.cleaned_data_path}} --model_path ${{outputs.model_path}}

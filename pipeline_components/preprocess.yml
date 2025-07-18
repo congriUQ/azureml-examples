@@ -1,0 +1,14 @@
+name: preprocess
+display_name: Preprocess Data
+type: command
+description: Clean and prepare raw data
+inputs:
+  raw_data:
+    type: uri_folder
+outputs:
+  cleaned_data_path:
+    type: uri_folder
+code: .
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu@latest
+command: >
+  python preprocess.py --raw_data ${{inputs.raw_data}} --cleaned_data_path ${{outputs.cleaned_data_path}}
