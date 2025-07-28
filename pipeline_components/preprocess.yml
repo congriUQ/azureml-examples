@@ -11,4 +11,4 @@ outputs:
 code: ../src/preprocess.py
 environment: azureml:diabetes@latest
 command: >
-  python preprocess.py --raw_data ${{inputs.raw_data}} --cleaned_data_path ${{outputs.cleaned_data_path}}
+  python preprocess.py --raw_data ${{inputs.raw_data}} --prepared_data ${{outputs.prepared_data}}
