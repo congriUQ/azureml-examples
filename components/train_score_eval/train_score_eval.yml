@@ -37,7 +37,7 @@ outputs:
 
 jobs:
   train_with_sample_data:
-    type: component
+    type: pipeline
     component: azureml:train_model@latest # Or a specific version, e.g., azureml:train_model:1
     inputs:
       training_data: ${{parent.inputs.training_input}}
@@ -50,7 +50,7 @@ jobs:
         type: uri_folder # Or uri_file
 
   score_with_sample_data:
-    type: component
+    type: pipeline
     component: azureml:score_data@latest # Or a specific version
     inputs:
       model_input: ${{jobs.train_with_sample_data.outputs.model_output}}
@@ -61,7 +61,7 @@ jobs:
         mode: upload # Translates from .mode = "upload"
 
   eval_with_sample_data:
-    type: component
+    type: pipeline
     component: azureml:eval_model@latest # Or a specific version
     inputs:
       scoring_result: ${{jobs.score_with_sample_data.outputs.score_output}}
