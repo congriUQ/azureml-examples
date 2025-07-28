@@ -9,6 +9,6 @@ outputs:
   prepared_data:
     type: uri_folder
 code: ../src/preprocess.py
-environment: azureml:diabetes@latest
+environment: azureml:sklearn_juicebase@latest
 command: >
   python preprocess.py --raw_data ${{inputs.raw_data}} --prepared_data ${{outputs.prepared_data}}
