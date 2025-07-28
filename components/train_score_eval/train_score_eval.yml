@@ -26,9 +26,9 @@ inputs:
 
 outputs:
   model_output:
-    type: uri_folder
+    type: mlflow_model
     description: The trained model
-  evaluation_report:
+  eval_report:
     type: uri_folder
     description: The evaluation report
 
@@ -62,5 +62,5 @@ jobs:
     inputs:
       scoring_result: ${{parent.jobs.score_with_sample_data.outputs.score_output}}
     outputs:
-      eval_output:
+      eval_report:
         type: uri_folder # Or uri_file
