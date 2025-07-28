@@ -15,9 +15,6 @@ inputs:
     type: number
     description: Learning rate for training
     default: 0.01 # Example default if not provided in Python
-  train_compute:
-    type: string
-    description: Compute target for training
   training_max_epochs:
     type: integer
     description: Maximum epochs for training
@@ -44,7 +41,6 @@ jobs:
       max_epochs: ${{parent.inputs.training_max_epochs}}
       learning_rate: ${{parent.inputs.training_learning_rate}}
       learning_rate_schedule: ${{parent.inputs.learning_rate_schedule}}
-    compute: ${{parent.inputs.train_compute}}
     outputs:
       model_output: # This name should match the output name in train_model component's YAML
         type: uri_folder # Or uri_file
