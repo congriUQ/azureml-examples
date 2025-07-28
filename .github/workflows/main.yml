@@ -24,15 +24,15 @@ jobs:
     # Set default subscription and workspace
     - name: Set Azure defaults
       run: |
-        az account set --subscription "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-        az configure --defaults workspace=${{ secrets.AZURE_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
+        az account set --subscription "${{ secrets.CONET_AZURE_SUBSCRIPTION_ID }}"
+        az configure --defaults workspace=${{ secrets.JUICEBASE_AML_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
 
     # Deploy pipeline components
     - name: Deploy pipeline components
       run: |
-        az ml component create --file ./pipeline_components/preprocess.yml --workspace-name ${{ secrets.AML_WORKSPACE_NAME }}
-        az ml component create --file ./pipeline_components/train.yml --workspace-name ${{ secrets.AML_WORKSPACE_NAME }}
-        az ml component create --file pipeline.yml --workspace-name ${{ secrets.AML_WORKSPACE_NAME }}
+        az ml component create --file ./pipeline_components/preprocess.yml
+        az ml component create --file ./pipeline_components/train.yml
+        az ml component create --file pipeline.yml --workspace-name
 
 #    # Submit the Azure ML job
 #    - name: Submit Azure ML job
