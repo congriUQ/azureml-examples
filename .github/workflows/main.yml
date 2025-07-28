@@ -31,8 +31,8 @@ jobs:
     - name: Deploy pipeline components
       run: |
         az ml component create --file ./pipeline_components/preprocess.yml
-        az ml component create --file ./pipeline_components/train.yml
-        az ml component create --file pipeline.yml --workspace-name
+#        az ml component create --file ./pipeline_components/train.yml
+#        az ml component create --file pipeline.yml
 
 #    # Submit the Azure ML job
 #    - name: Submit Azure ML job
