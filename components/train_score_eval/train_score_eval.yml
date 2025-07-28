@@ -49,7 +49,7 @@ jobs:
     type: pipeline
     component: azureml:score_data@latest # Or a specific version
     inputs:
-      model_input: ${{jobs.train_with_sample_data.outputs.model_output}}
+      model_input: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
       test_data: ${{parent.inputs.test_input}}
     outputs:
       score_output:
@@ -60,7 +60,7 @@ jobs:
     type: pipeline
     component: azureml:eval_model@latest # Or a specific version
     inputs:
-      scoring_result: ${{jobs.score_with_sample_data.outputs.score_output}}
+      scoring_result: ${{parent.jobs.score_with_sample_data.outputs.score_output}}
     outputs:
       eval_output:
         type: uri_folder # Or uri_file
