@@ -39,7 +39,7 @@ jobs:
     - name: Create batch endpoint
       run: |
         az ml batch-endpoint create --file batch-endpoint.yml
-        sleep 15
+        sleep 20
 
     - name: Create batch deployment
       run: |
@@ -48,3 +48,4 @@ jobs:
     - name: Trigger pipeline
       run: |
         az ml job create --file pipeline-job.yml
+        az ml job cancel --name pipeline-run

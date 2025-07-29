@@ -1,4 +1,5 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+name: pipeline-run
 type: pipeline
 compute: azureml:DS11v2lp
 inputs:
