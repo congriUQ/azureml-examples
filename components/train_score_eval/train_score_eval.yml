@@ -6,7 +6,8 @@ description: E2E dummy train-score-eval pipeline with components defined via yam
 
 inputs:
   training_input:
-    type: uri_folder # Or uri_file, depending on what your component expects
+    type: mltable
+    mode: ro_mount
     description: Training data
   test_input:
     type: uri_folder # Or uri_file

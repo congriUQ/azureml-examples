@@ -6,7 +6,8 @@ display_name: Train Model
 description: A dummy training component
 inputs:
   training_data: 
-    type: uri_folder
+    type: mltable
+    mode: ro_mount
   max_epochs:
     type: integer
   learning_rate: 
