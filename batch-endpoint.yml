@@ -1,0 +1,3 @@
+$schema: https://azuremlschemas.azureedge.net/latest/batchEndpoint.schema.json
+name: training-pipeline-endpoint
+auth_mode: aml_token

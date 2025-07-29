@@ -1,0 +1,8 @@
+$schema: https://azuremlschemas.azureedge.net/latest/batchDeployment.schema.json
+name: training-pipeline-deployment
+endpoint_name: training-pipeline-endpoint
+type: pipeline
+job_definition: ./pipeline-job.yml
+compute: azureml:DS11v2lp
+resources:
+  instance_count: 1

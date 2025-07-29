@@ -36,3 +36,6 @@ jobs:
         az ml component create --file ./components/eval/eval.yml
         az ml component create --file ./components/compare2/compare2.yml
         az ml component create --file ./components/train_score_eval/train_score_eval.yml
+        az ml batch-endpoint create --file batch-endpoint.yml --debug
+        az ml batch-deployment create --file batch-deployment.yml --debug
+        az ml batch-endpoint update --name training-pipeline-endpoint --set default_deployment=training-pipeline-deployment --debug

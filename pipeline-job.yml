@@ -1,15 +1,18 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
-
-experiment_name: diabetes-pipeline
-display_name: diabetes-train-job
-description: This pipeline demonstrates how to train a machine learning classifier over the diabetes dataset.
-
-compute: A1v2
-component: pipeline.yml
+compute: azureml:DS11v2lp
 inputs:
   raw_data:
-    type: uri_folder
-outputs:
-  model:
-    type: mlflow_model
-    mode: upload
+    type: mltable
+    path: azureml:diabetes@latest
+jobs:
+  train_score_eval:
+    type: command
+    component: azureml:train_pipeline_component@latest
+    inputs:
+      raw_data: ${{parent.inputs.raw_data}}
+    outputs:
+      model_output:
+        type: mlflow_model
+      eval_report:
+        type: uri_folder
