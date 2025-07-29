@@ -27,10 +27,9 @@ jobs:
         az account set --subscription "${{ secrets.CONET_AZURE_SUBSCRIPTION_ID }}"
         az configure --defaults workspace=${{ secrets.JUICEBASE_AML_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
 
-    # Deploy pipeline components
     - name: Deploy pipeline components
       run: |
-        az ml component create --file ./components/preprocess/preprocess.yml
+#        az ml component create --file ./components/preprocess/preprocess.yml
 #        az ml component create --file ./components/train/train.yml
 #        az ml component create --file ./components/score/score.yml
 #        az ml component create --file ./components/eval/eval.yml
