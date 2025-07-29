@@ -4,6 +4,7 @@ type: command
 name: preprocess
 display_name: Preprocess Data
 description: Clean and prepare raw data
+version: 1
 inputs:
   raw_data:
     type: mltable
