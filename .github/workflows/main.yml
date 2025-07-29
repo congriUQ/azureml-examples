@@ -30,7 +30,7 @@ jobs:
     # Deploy pipeline components
     - name: Deploy pipeline components
       run: |
-#        az ml component create --file ./components/preprocess/preprocess.yml
+        az ml component create --file ./components/preprocess/preprocess.yml
 #        az ml component create --file ./components/train/train.yml
 #        az ml component create --file ./components/score/score.yml
 #        az ml component create --file ./components/eval/eval.yml
