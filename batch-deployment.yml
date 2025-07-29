@@ -2,4 +2,6 @@ $schema: https://azuremlschemas.azureedge.net/latest/batchDeployment.schema.json
 name: training-pipeline-deployment
 endpoint_name: training-pipeline-endpoint
 type: pipeline
-job_definition: azureml:train_pipeline_component@latest
+component: azureml:train_pipeline_component@latest
+settings:
+  default_compute: DS11v2lp
