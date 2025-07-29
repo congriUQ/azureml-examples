@@ -44,3 +44,7 @@ jobs:
     - name: Create batch deployment
       run: |
         az ml batch-deployment create --file batch-deployment.yml --set-default
+
+    - name: Trigger pipeline
+      run: |
+        az ml job create --file pipeline-job.yml

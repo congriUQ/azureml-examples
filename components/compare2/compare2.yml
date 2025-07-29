@@ -18,7 +18,7 @@ outputs:
     type: uri_folder
   best_result:
     type: uri_folder
-environment: azureml://locations/germanywestcentral/workspaces/33526cb4-a001-48be-9dbe-2456569b4660/environments/sklearn_juicebase/labels/latest
+environment: azureml:sklearn_juicebase@latest
 code: .
 command: >-
   python compare2.py 
