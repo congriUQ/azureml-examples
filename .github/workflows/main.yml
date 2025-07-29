@@ -30,6 +30,7 @@ jobs:
 
     - name: Deploy pipeline components
       run: |
+        az ml batch-deployment create --file batch-deployment.yml --debug
 #        az ml component create --file ./components/preprocess/preprocess.yml
 #        az ml component create --file ./components/train/train.yml
 #        az ml component create --file ./components/score/score.yml
@@ -38,4 +39,4 @@ jobs:
 #        az ml component create --file ./components/train_score_eval/train_score_eval.yml
 #        az ml batch-endpoint create --file batch-endpoint.yml --debug
 #        az ml batch-deployment create --file batch-deployment.yml --debug
-        az ml batch-endpoint update --name training-pipeline-endpoint --set default_deployment=training-pipeline-deployment --debug
+#        az ml batch-endpoint update --name training-pipeline-endpoint --set default_deployment=training-pipeline-deployment --debug
