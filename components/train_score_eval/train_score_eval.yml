@@ -61,5 +61,4 @@ jobs:
     inputs:
       scoring_result: ${{parent.jobs.score_with_sample_data.outputs.score_output}}
     outputs:
-      eval_report:
-        type: uri_folder # Or uri_file
+      eval_report: ${{parent.outputs.eval_report}}
