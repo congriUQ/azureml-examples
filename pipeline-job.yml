@@ -6,14 +6,54 @@ inputs:
   raw_data:
     type: mltable
     path: azureml:diabetes@latest
+  training_learning_rate: 0.01
+  training_max_epochs: 10
+  learning_rate_schedule: time-based
+
+outputs:
+  model_output:
+    type: mlflow_model
+  eval_report:
+    type: uri_folder
+
 jobs:
-  train_score_eval:
-    type: command
-    component: azureml:train_pipeline_component@latest
+  preprocess:
+    type: pipeline
+    component: azureml:preprocess@latest
     inputs:
       raw_data: ${{parent.inputs.raw_data}}
     outputs:
-      model_output:
-        type: mlflow_model
-      eval_report:
-        type: uri_folder
+      training_data:
+        type: uri_file
+      test_data:
+        type: uri_file
+
+  train_with_sample_data:
+    type: pipeline
+    component: azureml:train_model@latest # Or a specific version, e.g., azureml:train_model:1
+    inputs:
+      training_data: ${{parent.jobs.preprocess.outputs.training_data}}
+      max_epochs: ${{parent.inputs.training_max_epochs}}
+      learning_rate: ${{parent.inputs.training_learning_rate}}
+      learning_rate_schedule: ${{parent.inputs.learning_rate_schedule}}
+    outputs:
+      model_output: ${{parent.outputs.model_output}}
+
+  score_with_sample_data:
+    type: pipeline
+    component: azureml:score_data@latest # Or a specific version
+    inputs:
+      model_input: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
+      test_data: ${{parent.jobs.preprocess.outputs.test_data}}
+    outputs:
+      score_output:
+        type: uri_folder # Or uri_file
+        mode: upload # Translates from .mode = "upload"
+
+  eval_with_sample_data:
+    type: pipeline
+    component: azureml:eval_model@latest # Or a specific version
+    inputs:
+      scoring_result: ${{parent.jobs.score_with_sample_data.outputs.score_output}}
+    outputs:
+      eval_report: ${{parent.outputs.eval_report}}
