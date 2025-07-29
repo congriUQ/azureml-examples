@@ -31,8 +31,8 @@ jobs:
     - name: Deploy pipeline components
       run: |
         az ml component create --file ./components/preprocess/preprocess.yml
-        az ml component create --file ./components/train/train.yml
-        az ml component create --file ./components/score/score.yml
-        az ml component create --file ./components/eval/eval.yml
-        az ml component create --file ./components/compare2/compare2.yml
+#        az ml component create --file ./components/train/train.yml
+#        az ml component create --file ./components/score/score.yml
+#        az ml component create --file ./components/eval/eval.yml
+#        az ml component create --file ./components/compare2/compare2.yml
 #        az ml component create --file ./components/train_score_eval/train_score_eval.yml
