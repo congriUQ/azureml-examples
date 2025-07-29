@@ -42,8 +42,7 @@ jobs:
       learning_rate: ${{parent.inputs.training_learning_rate}}
       learning_rate_schedule: ${{parent.inputs.learning_rate_schedule}}
     outputs:
-      model_output: # This name should match the output name in train_model component's YAML
-        type: mlflow_model # Or uri_file
+      model_output: ${{parent.outputs.model_output}}
 
   score_with_sample_data:
     type: pipeline
