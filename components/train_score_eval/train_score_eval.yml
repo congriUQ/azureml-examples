@@ -7,7 +7,6 @@ description: E2E dummy train-score-eval pipeline with components defined via yam
 inputs:
   raw_data:
     type: mltable
-    path: azureml:diabetes@latest
   training_learning_rate:
     type: number
     description: Learning rate for training
