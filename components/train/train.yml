@@ -17,7 +17,7 @@ inputs:
     default: time-based 
 outputs:
   model_output:
-    type: uri_folder
+    type: mlflow_model
 code: .
 environment: azureml://registries/azureml/environments/sklearn-1.5/labels/latest
 command: >-
