@@ -27,25 +27,24 @@ jobs:
         az account set --subscription "${{ secrets.CONET_AZURE_SUBSCRIPTION_ID }}"
         az configure --defaults workspace=${{ secrets.JUICEBASE_AML_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
 
-#    - name: Deploy pipeline components
-#      run: |
-#        az ml component create --file ./components/preprocess/preprocess.yml
-#        az ml component create --file ./components/train/train.yml
-#        az ml component create --file ./components/score/score.yml
-#        az ml component create --file ./components/eval/eval.yml
-#        az ml component create --file ./components/compare2/compare2.yml
-##        az ml component create --file ./components/train_score_eval/train_score_eval.yml
-#
-#    - name: Create batch endpoint
-#      run: |
-#        az ml batch-endpoint create --file batch-endpoint.yml
-#        sleep 20
-#
-#    - name: Create batch deployment
-#      run: |
-#        az ml batch-deployment create --file batch-deployment.yml --set-default
+    - name: Deploy pipeline components
+      run: |
+        az ml component create --file ./components/preprocess/preprocess.yml
+        az ml component create --file ./components/train/train.yml
+        az ml component create --file ./components/score/score.yml
+        az ml component create --file ./components/eval/eval.yml
+        az ml component create --file ./components/compare2/compare2.yml
+#        az ml component create --file ./components/train_score_eval/train_score_eval.yml
+
+    - name: Create batch endpoint
+      run: |
+        az ml batch-endpoint create --file batch-endpoint.yml
+        sleep 20
+
+    - name: Create batch deployment
+      run: |
+        az ml batch-deployment create --file batch-deployment.yml --set-default
 
     - name: Trigger pipeline
       run: |
-        az ml job create --file pipeline-job.yml
-        az ml job cancel --name pipeline-run
+        az ml batch-endpoint invoke --name training-pipeline-endpoint
