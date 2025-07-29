@@ -47,4 +47,4 @@ jobs:
 
     - name: Trigger pipeline
       run: |
-        az ml batch-endpoint invoke --name training-pipeline-endpoint
+        az ml batch-endpoint invoke --name training-pipeline-endpoint --input azureml:diabetes@latest
