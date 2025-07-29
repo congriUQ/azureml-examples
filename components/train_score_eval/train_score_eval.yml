@@ -5,13 +5,10 @@ type: pipeline
 description: E2E dummy train-score-eval pipeline with components defined via yaml.
 
 inputs:
-  training_input:
+  raw_data:
     type: mltable
     mode: ro_mount
-    description: Training data
-  test_input:
-    type: uri_folder # Or uri_file
-    description: Test data
+    description: The raw dataset.
   training_learning_rate:
     type: number
     description: Learning rate for training
@@ -34,11 +31,22 @@ outputs:
     description: The evaluation report
 
 jobs:
+  preprocess:
+    type: pipeline
+    component: azureml:preprocess@latest
+    inputs:
+      raw_data: ${{parent.inputs.raw_data}}
+    outputs:
+      training_data:
+        type: uri_file
+      test_data:
+        type: uri_file
+
   train_with_sample_data:
     type: pipeline
     component: azureml:train_model@latest # Or a specific version, e.g., azureml:train_model:1
     inputs:
-      training_data: ${{parent.inputs.training_input}}
+      training_data: ${{parent.jobs.preprocess.outputs.training_data}}
       max_epochs: ${{parent.inputs.training_max_epochs}}
       learning_rate: ${{parent.inputs.training_learning_rate}}
       learning_rate_schedule: ${{parent.inputs.learning_rate_schedule}}
@@ -50,7 +58,7 @@ jobs:
     component: azureml:score_data@latest # Or a specific version
     inputs:
       model_input: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
-      test_data: ${{parent.inputs.test_input}}
+      test_data: ${{parent.jobs.preprocess.outputs.test_data}}
     outputs:
       score_output:
         type: uri_folder # Or uri_file
