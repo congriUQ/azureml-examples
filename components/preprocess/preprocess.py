@@ -14,7 +14,7 @@ print(f"args\n\n{args}")
 
 
 # Load MLTable dataset
-diabetes_dataset = mltable.load(args.training_data).to_pandas_dataframe()
+diabetes_dataset = mltable.load(args.raw_data).to_pandas_dataframe()
 print(diabetes_dataset.head())
 
 x_train, x_test, y_train, y_test = train_test_split(
