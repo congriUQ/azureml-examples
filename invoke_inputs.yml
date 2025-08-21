@@ -1,0 +1,4 @@
+inputs:
+  raw_data:
+    type: mltable
+    path: azureml:diabetes@latest

@@ -47,4 +47,4 @@ jobs:
 
     - name: Trigger pipeline
       run: |
-        az ml batch-endpoint invoke --name training-pipeline-endpoint --inputs '{"raw_data": "azureml:diabetes:1"}'
+        az ml batch-endpoint invoke --name training-pipeline-endpoint --file invoke_inputs.yml
