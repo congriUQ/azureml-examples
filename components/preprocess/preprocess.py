@@ -6,6 +6,8 @@ from sklearn.preprocessing import StandardScaler
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--raw_data", type=str)
+parser.add_argument("--training_data", type=str)
+parser.add_argument("--test_data", type=str)
 args = parser.parse_args()
 
 print(f"args\n\n{args}")
