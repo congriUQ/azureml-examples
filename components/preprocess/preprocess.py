@@ -1,3 +1,5 @@
+import os
+
 import mltable
 import argparse
 from sklearn.model_selection import train_test_split
@@ -29,5 +31,6 @@ scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
+print(f"train output folder:\n {os.listdir(args.training_data)}")
 np.save(Path(args.training_data) / "x_train.npy", x_train)
 np.save(Path(args.test_data) / "x_test.npy", x_test)
