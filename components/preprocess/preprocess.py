@@ -2,6 +2,7 @@ import mltable
 import argparse
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from pathlib import Path
 
 
 parser = argparse.ArgumentParser()
@@ -26,3 +27,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
+
+x_train.to_parquet(Path(args.training_data) / "train.parquet")
+x_test.to_parquet(Path(args.test_data) / "test.parquet")
+
