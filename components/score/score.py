@@ -1,5 +1,7 @@
 import argparse
 from pathlib import Path
+import pickle
+import numpy as np
 
 parser = argparse.ArgumentParser("score")
 parser.add_argument("--model_input", type=str, help="Path of input model")
@@ -19,13 +21,12 @@ lines = [
 for line in lines:
     print(line)
 
-# Load the model from input port
-# Here only print the model as text since it is a dummy one
-model = (Path(args.model_input) / "model.txt").read_text()
+model_path = Path(args.model_input) / "model.pkl"
+with open(model_path, "rb") as model_file:
+    model = pickle.load(model_file)
 print("Model: ", model)
 
-# Do scoring with the input model
-# Here only print text to output file as demo
-(Path(args.score_output) / "score.txt").write_text(
-    "Scored with the following mode:\n{}".format(model)
-)
+# score
+x_test = np.load(Path(args.test_data) / "x_test.npy")
+y_pred = model.predict(x_test)
+np.save(Path(args.score_output) / "y_pred.npy", y_pred)

@@ -31,8 +31,6 @@ scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
-print(f"parent parent folder:\n {os.listdir(Path(args.training_data).parents[2])}")
-print(f"parent folder:\n {os.listdir(Path(args.training_data).parents[1])}")
 np.save(Path(args.training_data) / "x_train.npy", x_train)
 np.save(Path(args.test_data) / "x_test.npy", x_test)
 np.save(Path(args.training_data) / "y_train.npy", y_train)
