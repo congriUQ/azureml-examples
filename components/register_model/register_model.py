@@ -30,7 +30,7 @@ with open(Path(args.eval_report) / "eval_report.json") as f:
 
 
 model = Model(
-    path="./model.pkl",
+    path=(Path(args.model) / "model.pkl"),
     name="logistic_regression",
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression"},

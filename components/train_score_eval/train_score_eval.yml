@@ -21,9 +21,6 @@ inputs:
     default: "time-based"
 
 outputs:
-  model_output:
-    type: uri_folder
-    description: The trained model
   eval_report:
     type: uri_folder
     description: The evaluation report
