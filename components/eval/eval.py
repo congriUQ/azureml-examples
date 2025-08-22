@@ -1,9 +1,9 @@
 import argparse
+import json
 from pathlib import Path
+
 import numpy as np
 from sklearn.metrics import classification_report
-
-
 
 parser = argparse.ArgumentParser("score")
 parser.add_argument("--test_data", type=str, help="Path to test data")
@@ -28,5 +28,8 @@ for line in lines:
 y_test = np.load(Path(args.test_data) / "y_test.npy")
 y_pred = np.load(Path(args.scoring_result) / "y_pred.npy")
 
-clf_report = classification_report(y_test, y_pred)
+clf_report = classification_report(y_test, y_pred, output_dict=True)
 print(classification_report(y_test, y_pred))
+
+with open(Path(args.eval_output) / "eval_report.json", "w") as f:
+    json.dump(clf_report, f)

@@ -42,7 +42,7 @@ jobs:
 
   train_with_sample_data:
     type: pipeline
-    component: azureml:train_model@latest # Or a specific version, e.g., azureml:train_model:1
+    component: azureml:train_model@latest
     inputs:
       training_data: ${{parent.jobs.preprocess.outputs.training_data}}
       max_epochs: ${{parent.inputs.training_max_epochs}}
@@ -53,20 +53,27 @@ jobs:
 
   score_with_sample_data:
     type: pipeline
-    component: azureml:score_data@latest # Or a specific version
+    component: azureml:score_data@latest
     inputs:
       model_input: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
       test_data: ${{parent.jobs.preprocess.outputs.test_data}}
     outputs:
       score_output:
-        type: uri_folder # Or uri_file
-        mode: upload # Translates from .mode = "upload"
+        type: uri_folder
+        mode: upload
 
   eval_with_sample_data:
     type: pipeline
-    component: azureml:eval_model@latest # Or a specific version
+    component: azureml:eval_model@latest
     inputs:
       scoring_result: ${{parent.jobs.score_with_sample_data.outputs.score_output}}
       test_data: ${{parent.jobs.preprocess.outputs.test_data}}
     outputs:
       eval_report: ${{parent.outputs.eval_report}}
+
+  register_model:
+    type: pipeline
+    component: azureml:register_model@latest
+    inputs:
+      model: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
+      eval_report: ${{}parent.jobs.eval_with_sample_data.outputs.eval_report}
