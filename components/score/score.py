@@ -3,6 +3,7 @@ from pathlib import Path
 import pickle
 import numpy as np
 
+
 parser = argparse.ArgumentParser("score")
 parser.add_argument("--model_input", type=str, help="Path of input model")
 parser.add_argument("--test_data", type=str, help="Path to test data")

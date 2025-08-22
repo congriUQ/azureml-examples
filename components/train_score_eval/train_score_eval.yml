@@ -67,5 +67,6 @@ jobs:
     component: azureml:eval_model@latest # Or a specific version
     inputs:
       scoring_result: ${{parent.jobs.score_with_sample_data.outputs.score_output}}
+      test_data: ${{parent.jobs.preprocess.outputs.test_data}}
     outputs:
       eval_report: ${{parent.outputs.eval_report}}

@@ -1,8 +1,12 @@
 import argparse
 from pathlib import Path
-from datetime import datetime
+import numpy as np
+from sklearn.metrics import classification_report
+
+
 
 parser = argparse.ArgumentParser("score")
+parser.add_argument("--test_data", type=str, help="Path to test data")
 parser.add_argument("--scoring_result", type=str, help="Path of scoring result")
 parser.add_argument("--eval_output", type=str, help="Path of output evaluation result")
 
@@ -20,6 +24,8 @@ for line in lines:
 
 # Evaluate the incoming scoring result and output evaluation result.
 # Here only output a dummy file for demo.
-curtime = datetime.now().strftime("%b-%d-%Y %H:%M:%S")
-eval_msg = f"Eval done at {curtime}\n"
-(Path(args.eval_output) / "eval_result.txt").write_text(eval_msg)
+y_test = np.load(Path(args.test_data) / "y_test.npy")
+y_pred = np.load(Path(args.scoring_result) / "y_pred.npy")
+
+clf_report = classification_report(y_test, y_pred)
+print(classification_report(y_test, y_pred))
