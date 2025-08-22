@@ -16,6 +16,7 @@ print("hello evaluation world...")
 
 lines = [
     f"Scoring result path: {args.scoring_result}",
+    f"Test data path: {args.test_data}",
     f"Evaluation output path: {args.eval_output}",
 ]
 

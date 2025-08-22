@@ -17,4 +17,5 @@ code: .
 command: >-
   python eval.py 
   --scoring_result ${{inputs.scoring_result}} 
+  --test_data ${{inputs.test_data}}
   --eval_output ${{outputs.eval_report}}
