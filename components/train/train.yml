@@ -18,7 +18,7 @@ inputs:
     default: time-based 
 outputs:
   model_output:
-    type: mlflow_model
+    type: uri_folder
 code: .
 environment: azureml:sklearn_juicebase@latest
 command: >-

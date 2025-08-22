@@ -22,7 +22,7 @@ inputs:
 
 outputs:
   model_output:
-    type: mlflow_model
+    type: uri_folder
     description: The trained model
   eval_report:
     type: uri_folder

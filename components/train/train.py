@@ -6,6 +6,10 @@ import os
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from pickle import dump
+import json
+from azure.ai.ml import MLClient
+from azure.identity import ManagedIdentityCredential
+from azure.ai.ml.entities import Model
 
 
 parser = argparse.ArgumentParser("train")
@@ -42,7 +46,6 @@ clf.fit(x_train, y_train)
 
 with open(Path(args.model_output) / "model.pkl", "wb") as model_file:
     dump(clf, model_file, protocol=5)
-
 
 # Do the train and save the trained model as a file into the output folder.
 # Here only output a dummy data for demo.
