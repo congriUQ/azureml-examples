@@ -76,4 +76,4 @@ jobs:
     component: azureml:register_model@latest
     inputs:
       model: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
-      eval_report: ${{}parent.jobs.eval_with_sample_data.outputs.eval_report}
+      eval_report: ${{parent.jobs.eval_with_sample_data.outputs.eval_report}}
