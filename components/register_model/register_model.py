@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser("register")
 parser.add_argument("--model", type=str, help="Path to trained model directory")
 parser.add_argument("--eval_report", type=str, help="Path of output evaluation result directory")
 parser.add_argument("--hyperparameters", type=str, help="Path of output hyperparameters directory")
-parser.add_argument("--accuracy_threshold", type=int, help="Minimum accuracy required")
+parser.add_argument("--accuracy_threshold", type=float, help="Minimum accuracy required")
 args = parser.parse_args()
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
