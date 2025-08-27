@@ -27,28 +27,28 @@ jobs:
         az account set --subscription "${{ secrets.CONET_AZURE_SUBSCRIPTION_ID }}"
         az configure --defaults workspace=${{ secrets.JUICEBASE_AML_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
 
-    - name: Run sample job
-      run: |
-        az ml job create --file sample_job.yml
+#    - name: Run sample job
+#      run: |
+#        az ml job create --file sample_job.yml
 
-#    - name: Deploy pipeline components
-#      run: |
-#        az ml component create --file ./components/preprocess/preprocess.yml
-#        az ml component create --file ./components/train/train.yml
-#        az ml component create --file ./components/score/score.yml
-#        az ml component create --file ./components/eval/eval.yml
-#        az ml component create --file ./components/register_model/register_model.yml
-#        az ml component create --file ./components/train_score_eval/train_score_eval.yml
-#
-#    - name: Create batch endpoint
-#      run: |
-#        az ml batch-endpoint create --file batch-endpoint.yml
-#        sleep 30
-#
-#    - name: Create batch deployment
-#      run: |
-#        az ml batch-deployment create --file batch-deployment.yml --set-default
-#
-#    - name: Trigger pipeline
-#      run: |
-#        az ml batch-endpoint invoke --name training-pipeline-endpoint --file invoke_inputs.yml
+    - name: Deploy pipeline components
+      run: |
+        az ml component create --file ./components/preprocess/preprocess.yml
+        az ml component create --file ./components/train/train.yml
+        az ml component create --file ./components/score/score.yml
+        az ml component create --file ./components/eval/eval.yml
+        az ml component create --file ./components/register_model/register_model.yml
+        az ml component create --file ./components/train_score_eval/train_score_eval.yml
+
+    - name: Create batch endpoint
+      run: |
+        az ml batch-endpoint create --file batch-endpoint.yml
+        sleep 30
+
+    - name: Create batch deployment
+      run: |
+        az ml batch-deployment create --file batch-deployment.yml --set-default
+
+    - name: Trigger pipeline
+      run: |
+        az ml batch-endpoint invoke --name training-pipeline-endpoint --file invoke_inputs.yml
