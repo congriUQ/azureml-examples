@@ -55,12 +55,12 @@ jobs:
 
     - name: Create online endpoint
       run: |
-        az ml online-endpoint create --file online-endpoint.yml --name my-online-endpoint
+        az ml online-endpoint create --file online-endpoint.yml --name juicebase-online-endpoint
 
     - name: Create online deployment
       run: |
-        az ml online-deployment create --file online-deployment.yml --name blue --endpoint-name my-online-endpoint
+        az ml online-deployment create --file online-deployment.yml --name blue --endpoint-name juicebase-online-endpoint
 
     - name: Route traffic
       run: |
-        az ml online-endpoint update --name my-online-endpoint --traffic blue=100
+        az ml online-endpoint update --name juicebase-online-endpoint --traffic blue=100
