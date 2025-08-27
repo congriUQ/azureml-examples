@@ -1,12 +1,14 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: blue
-endpoint_name: my-online-endpoint
+endpoint_name: juicebase-online-endpoint
 model: 
   name: logistic_regression
   version: latest
 environment: azureml:sklearn_juicebase@latest
-settings:
-  default_compute: DS11v2lp
+tags:
+  project: juicebase-kickoff
+instance_type: Standard_D2as_v4
+instance_count: 1
 code_configuration:
-  code: .
+  code: ./
   scoring_script: score.py
