@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+command: python sample_job.py
+code: .
+environment: azureml:sklearn_juicebase@latest
+compute: azureml:DS11v2lp
