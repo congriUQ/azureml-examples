@@ -52,3 +52,15 @@ jobs:
     - name: Trigger pipeline
       run: |
         az ml batch-endpoint invoke --name training-pipeline-endpoint --file invoke_inputs.yml
+
+    - name: Create online endpoint
+      run: |
+        az ml online-endpoint create --file online-endpoint.yml --name my-online-endpoint
+
+    - name: Create online deployment
+      run: |
+        az ml online-deployment create --file online-deployment.yml --name blue --endpoint-name my-online-endpoint
+
+    - name: Route traffic
+      run: |
+        az ml online-endpoint update --name my-online-endpoint --traffic blue=100

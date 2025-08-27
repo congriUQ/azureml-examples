@@ -1,0 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json
+name: my-online-endpoint
+auth_mode: aad_token
+tags:
+  project: juicebase-kickoff
+traffic: {}

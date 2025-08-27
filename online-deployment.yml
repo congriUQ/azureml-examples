@@ -1,0 +1,12 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: blue
+endpoint_name: my-online-endpoint
+model: 
+  name: logistic_regression
+  version: latest
+environment: azureml:sklearn_juicebase@latest
+settings:
+  default_compute: DS11v2lp
+code_configuration:
+  code: .
+  scoring_script: score.py
