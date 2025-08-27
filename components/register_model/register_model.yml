@@ -20,4 +20,5 @@ command: >-
   python register_model.py 
   --eval_report ${{inputs.eval_report}} 
   --model ${{inputs.model}}
+  --hyperparameters ${{inputs.hyperparameters}}
   --accuracy_threshold ${{inputs.accuracy_threshold}}

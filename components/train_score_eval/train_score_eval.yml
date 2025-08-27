@@ -20,7 +20,7 @@ inputs:
     description: Learning rate schedule
     default: "time-based"
   accuracy_threshold:
-    type: integer
+    type: number
     description: Accuracy threshold for model registration
     default: 0.85
 
