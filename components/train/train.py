@@ -1,10 +1,12 @@
 import argparse
 import os
+import json
 from pathlib import Path
 from pickle import dump
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+
 
 parser = argparse.ArgumentParser("train")
 parser.add_argument("--training_data", type=str, help="Path to training data")
@@ -12,6 +14,7 @@ parser.add_argument("--max_epochs", type=int, help="Max # of epochs for the trai
 parser.add_argument("--learning_rate", type=float, help="Learning rate")
 parser.add_argument("--learning_rate_schedule", type=str, help="Learning rate schedule")
 parser.add_argument("--model_output", type=str, help="Path of output model")
+parser.add_argument("--parameter_output", type=str, help="Path of output parameters")
 
 args = parser.parse_args()
 
@@ -21,8 +24,9 @@ lines = [
     f"Training data path: {args.training_data}",
     f"Max epochs: {args.max_epochs}",
     f"Learning rate: {args.learning_rate}",
-    f"Learning rate: {args.learning_rate_schedule}",
+    f"Learning rate schedule: {args.learning_rate_schedule}",
     f"Model output path: {args.model_output}",
+    f"Parameter output path: {args.parameter_output}",
 ]
 
 for line in lines:
@@ -32,11 +36,30 @@ print("mounted_path files: ")
 arr = os.listdir(args.training_data)
 print(arr)
 
+# Load training data
 x_train = np.load(Path(args.training_data) / "x_train.npy")
 y_train = np.load(Path(args.training_data) / "y_train.npy")
 
+# Train model
 clf = LogisticRegression()
 clf.fit(x_train, y_train)
 
-with open(Path(args.model_output) / "model.pkl", "wb") as model_file:
+# Save model
+model_output_path = Path(args.model_output) / "model.pkl"
+model_output_path.parent.mkdir(parents=True, exist_ok=True)
+with open(model_output_path, "wb") as model_file:
     dump(clf, model_file, protocol=5)
+
+# Collect hyperparameters
+hyperparams = {
+    "max_epochs": args.max_epochs,
+    "learning_rate": args.learning_rate,
+    "learning_rate_schedule": args.learning_rate_schedule,
+}
+
+# Save hyperparameters to JSON
+param_output_path = Path(args.parameter_output) / "hyperparams.json"
+param_output_path.parent.mkdir(parents=True, exist_ok=True)
+with open(param_output_path, "w") as f:
+    json.dump(hyperparams, f)
+
