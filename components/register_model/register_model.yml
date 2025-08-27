@@ -13,7 +13,6 @@ inputs:
     type: uri_folder
   accuracy_threshold:
     type: number
-    default: 0.8
 
 environment: azureml:sklearn_juicebase@latest
 code: .
@@ -21,3 +20,4 @@ command: >-
   python register_model.py 
   --eval_report ${{inputs.eval_report}} 
   --model ${{inputs.model}}
+  --accuracy_threshold ${{inputs.accuracy_threshold}}

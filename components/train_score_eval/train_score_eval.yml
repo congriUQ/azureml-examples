@@ -19,6 +19,10 @@ inputs:
     type: string
     description: Learning rate schedule
     default: "time-based"
+  accuracy_treshold:
+    type: integer
+    description: Accuracy threshold for model registration
+    default: 0.85
 
 outputs:
   eval_report:
@@ -76,4 +80,4 @@ jobs:
       model: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
       eval_report: ${{parent.jobs.eval_with_sample_data.outputs.eval_report}}
       hyperparameters: ${{parent.jobs.train_with_sample_data.outputs.parameter_output}}
-      accuracy_threshold: 0.85
+      accuracy_threshold: ${{parent.inputs.accuracy_threshold}}
