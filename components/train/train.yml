@@ -19,6 +19,8 @@ inputs:
 outputs:
   model_output:
     type: uri_folder
+  parameter_output:
+    type: uri_folder
 code: .
 environment: azureml:sklearn_juicebase@latest
 command: >-
@@ -28,3 +30,4 @@ command: >-
   --learning_rate ${{inputs.learning_rate}} 
   --learning_rate_schedule ${{inputs.learning_rate_schedule}} 
   --model_output ${{outputs.model_output}}
+  --parameter_output ${{outputs.parameter_output}}

@@ -9,6 +9,11 @@ inputs:
     type: uri_folder
   model:
     type: uri_folder
+  hyperparameters:
+    type: uri_folder
+  accuracy_threshold:
+    type: number
+    default: 0.8
 
 environment: azureml:sklearn_juicebase@latest
 code: .
