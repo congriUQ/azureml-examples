@@ -8,11 +8,12 @@ from azure.ai.ml.entities import Model
 from azure.identity import ManagedIdentityCredential
 
 
-parser = argparse.ArgumentParser("score")
-parser.add_argument("--model", type=str)
-parser.add_argument("--eval_report", type=str, help="Path of output evaluation result")
+parser = argparse.ArgumentParser("register")
+parser.add_argument("--model", type=str, help="Path to trained model directory")
+parser.add_argument("--eval_report", type=str, help="Path of output evaluation result directory")
+parser.add_argument("--hyperparameters", type=str, help="Path of output hyperparameters directory")
+parser.add_argument("--accuracy_threshold", type=int, help="Minimum accuracy required")
 args = parser.parse_args()
-
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 cred = ManagedIdentityCredential()
@@ -25,9 +26,26 @@ ml_client = MLClient(
     workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
 )
 
+# Load evaluation report
 with open(Path(args.eval_report) / "eval_report.json") as f:
     eval_report = json.load(f)
 
+accuracy = eval_report["accuracy"]
+print(f"Gate check: accuracy={accuracy}, threshold={args.accuracy_threshold}")
+
+# Decide approval
+approve = accuracy >= args.accuracy_threshold
+print(f"Gate decision: {'approve' if approve else 'reject'}")
+if not approve:
+    print("Model not approved, will not be registered.")
+    exit(0)
+
+# Load hyperparameters
+with open(Path(args.hyperparameters) / "hyperparams.json") as f:
+    hyperparams = json.load(f)
+
+# Combine metadata for model registration
+properties = {**eval_report, **hyperparams}
 
 model = Model(
     path=(Path(args.model) / "model.pkl"),
@@ -35,7 +53,9 @@ model = Model(
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression"},
     type="custom_model",
-    properties=eval_report,
+    properties=properties,
 )
 
 registered_model = ml_client.models.create_or_update(model)
+print(f"Model registered: {registered_model.name} v{registered_model.version}")
+

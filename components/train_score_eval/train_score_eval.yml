@@ -47,6 +47,7 @@ jobs:
       learning_rate_schedule: ${{parent.inputs.learning_rate_schedule}}
     outputs:
       model_output: ${{parent.outputs.model_output}}
+      parameter_output: ${{parent.outputs.parameter_output}}
 
   score_with_sample_data:
     type: pipeline
@@ -74,3 +75,5 @@ jobs:
     inputs:
       model: ${{parent.jobs.train_with_sample_data.outputs.model_output}}
       eval_report: ${{parent.jobs.eval_with_sample_data.outputs.eval_report}}
+      hyperparameters: ${{parent.jobs.train_with_sample_data.outputs.parameter_output}}
+      accuracy_threshold: 0.85
