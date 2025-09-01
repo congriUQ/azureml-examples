@@ -59,6 +59,7 @@ model = Model(
     tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
     type="custom_model",
     properties=properties,
+    job_name=run_info["azureml.run_id"],
 )
 
 registered_model = ml_client.models.create_or_update(model)

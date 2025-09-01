@@ -34,7 +34,7 @@ y_pred = np.load(Path(args.scoring_result) / "y_pred.npy")
 clf_report = classification_report(y_test, y_pred, output_dict=True)
 print(classification_report(y_test, y_pred))
 
-# mlflow.log_metric("accuracy", clf_report["accuracy"])
+mlflow.log_metric("accuracy", clf_report["accuracy"])
 
 with open(Path(args.eval_output) / "eval_report.json", "w") as f:
     json.dump(clf_report, f)
