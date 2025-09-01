@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from pickle import dump
 
+import mlflow
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 
@@ -28,6 +29,8 @@ lines = [
     f"Model output path: {args.model_output}",
     f"Parameter output path: {args.parameter_output}",
 ]
+
+mlflow.autolog()
 
 for line in lines:
     print(line)
