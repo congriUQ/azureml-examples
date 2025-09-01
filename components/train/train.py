@@ -1,6 +1,7 @@
 import argparse
 import os
 import json
+import joblib
 from pathlib import Path
 from pickle import dump
 
@@ -47,10 +48,13 @@ clf = LogisticRegression()
 clf.fit(x_train, y_train)
 
 # Save model
-model_output_path = Path(args.model_output) / "model.pkl"
-model_output_path.parent.mkdir(parents=True, exist_ok=True)
-with open(model_output_path, "wb") as model_file:
-    dump(clf, model_file, protocol=5)
+# model_output_path = Path(args.model_output) / "model.pkl"
+# model_output_path.parent.mkdir(parents=True, exist_ok=True)
+# with open(model_output_path, "wb") as model_file:
+#     dump(clf, model_file, protocol=5)
+
+os.makedirs(args.model_output, exist_ok=True)
+joblib.dump(clf, os.path.join(args.model_output, "model.pkl"))
 
 # Collect hyperparameters
 hyperparams = {
