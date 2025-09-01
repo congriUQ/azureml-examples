@@ -7,6 +7,7 @@ from pickle import dump
 import mlflow
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+from azureml.core import Run
 
 
 parser = argparse.ArgumentParser("train")
@@ -65,8 +66,6 @@ param_output_path = Path(args.parameter_output) / "hyperparams.json"
 param_output_path.parent.mkdir(parents=True, exist_ok=True)
 with open(param_output_path, "w") as f:
     json.dump(hyperparams, f)
-
-from azureml.core import Run
 
 run = Run.get_context()
 print("Experiment:", run.experiment.name)
