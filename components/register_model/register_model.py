@@ -54,7 +54,7 @@ with open(Path(args.hyperparameters) / "run_info.json") as f:
 properties = {**run_info, **eval_report, **hyperparams}
 
 model = Model(
-    path=(Path(args.model) / "model.pkl"),
+    path=args.model,
     name="logistic_regression",
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
