@@ -58,9 +58,8 @@ model = Model(
     name="logistic_regression",
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
-    type="custom_model",
     properties=properties,
-    run_id=run_info["azureml.run_id"],
+    job_name=run_info["azureml.run_id"],
     model_framework='ScikitLearn',
     model_framework_version=sklearn.__version__,
 )
