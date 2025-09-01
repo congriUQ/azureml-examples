@@ -47,10 +47,10 @@ if not approve:
 with open(Path(args.hyperparameters) / "hyperparams.json") as f:
     hyperparams = json.load(f)
 
-with mlflow.start_run():
-    for param in hyperparams:
-        mlflow.log_param(f"{param}", hyperparams[param])
-    mlflow.log_metric("accuracy", accuracy)
+#with mlflow.start_run():
+for param in hyperparams:
+    mlflow.log_param(f"{param}", hyperparams[param])
+mlflow.log_metric("accuracy", accuracy)
 
 # Load run info
 with open(Path(args.hyperparameters) / "run_info.json") as f:
