@@ -8,6 +8,10 @@ import mlflow
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 
+from azure.ai.ml import MLClient
+from azure.ai.ml.entities import Model
+from azure.identity import ManagedIdentityCredential
+
 
 parser = argparse.ArgumentParser("train")
 parser.add_argument("--training_data", type=str, help="Path to training data")
@@ -18,6 +22,18 @@ parser.add_argument("--model_output", type=str, help="Path of output model")
 parser.add_argument("--parameter_output", type=str, help="Path of output parameters")
 
 args = parser.parse_args()
+
+cred = ManagedIdentityCredential()
+token = cred.get_token("https://management.azure.com/.default")
+
+ml_client = MLClient(
+    credential=cred,
+    subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
+    resource_group_name=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
+    workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
+)
+mlflow_tracking_uri = ml_client.workspaces.get(ml_client.workspace_name).mlflow_tracking_uri
+mlflow.set_tracking_uri(mlflow_tracking_uri)
 mlflow.sklearn.autolog()
 mlflow.start_run()
 
