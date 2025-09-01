@@ -7,6 +7,7 @@ import mlflow
 from azure.ai.ml import MLClient
 from azure.ai.ml.entities import Model
 from azure.identity import ManagedIdentityCredential
+import sklearn
 
 
 parser = argparse.ArgumentParser("register")
@@ -59,7 +60,10 @@ model = Model(
     tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
     type="custom_model",
     properties=properties,
-    job_name=run_info["azureml.run_id"],
+    run_id=run_info["azureml.run_id"],
+    model_framework=Model.Framework.SCIKITLEARN,  # Framework used to create the model.
+    model_framework_version=sklearn.__version__,  # Version of scikit-learn used to create the model.
+                          
 )
 
 registered_model = ml_client.models.create_or_update(model)
