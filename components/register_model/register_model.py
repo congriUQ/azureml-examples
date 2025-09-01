@@ -34,7 +34,6 @@ with open(Path(args.eval_report) / "eval_report.json") as f:
     eval_report = json.load(f)
 
 accuracy = eval_report["accuracy"]
-mlflow.log_metric("accuracy", accuracy)
 print(f"Gate check: accuracy={accuracy}, threshold={args.accuracy_threshold}")
 
 # Decide approval
@@ -48,8 +47,10 @@ if not approve:
 with open(Path(args.hyperparameters) / "hyperparams.json") as f:
     hyperparams = json.load(f)
 
-for param in hyperparams:
-    mlflow.log_param(f"{param}", hyperparams[param])
+with mlflow.start_run():
+    for param in hyperparams:
+        mlflow.log_param(f"{param}", hyperparams[param])
+    mlflow.log_metric("accuracy", accuracy)
 
 # Load run info
 with open(Path(args.hyperparameters) / "run_info.json") as f:
@@ -62,10 +63,9 @@ model = Model(
     path=(Path(args.model) / "model.pkl"),
     name="logistic_regression",
     description="A sample logistic regression model for the Diabetes dataset",
-    tags={"type": "logistic_regression"},
+    tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
     type="custom_model",
     properties=properties,
-    #tags={"experiment_name": run_info["experiment_name"]}
 )
 
 registered_model = ml_client.models.create_or_update(model)
