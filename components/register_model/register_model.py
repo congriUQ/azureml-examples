@@ -61,9 +61,8 @@ model = Model(
     type="custom_model",
     properties=properties,
     run_id=run_info["azureml.run_id"],
-    model_framework='ScikitLearn',  # Framework used to create the model.
-    model_framework_version=sklearn.__version__,  # Version of scikit-learn used to create the model.
-                          
+    model_framework='ScikitLearn',
+    model_framework_version=sklearn.__version__,
 )
 
 registered_model = ml_client.models.create_or_update(model)
