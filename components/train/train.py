@@ -66,3 +66,13 @@ param_output_path.parent.mkdir(parents=True, exist_ok=True)
 with open(param_output_path, "w") as f:
     json.dump(hyperparams, f)
 
+from azureml.core import Run
+
+run = Run.get_context()
+print("Experiment:", run.experiment.name)
+print("Run ID:", run.id)
+
+# save run info to output so registration step can use it
+run_output_path = Path(args.parameter_output) / "run_info.json"
+with open(run_output_path, "w") as f:
+    f.write(json.dumps({"experiment_name": run.experiment.name, "azureml.run_id": run.id}))

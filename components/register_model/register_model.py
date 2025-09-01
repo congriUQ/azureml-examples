@@ -51,8 +51,12 @@ with open(Path(args.hyperparameters) / "hyperparams.json") as f:
 for param in hyperparams:
     mlflow.log_param(f"{param}", hyperparams[param])
 
+# Load run info
+with open(Path(args.hyperparameters) / "run_info.json") as f:
+    run_info = json.load(f)
+
 # Combine metadata for model registration
-properties = {**eval_report, **hyperparams}
+properties = {**run_info, **eval_report, **hyperparams}
 
 model = Model(
     path=(Path(args.model) / "model.pkl"),
@@ -61,6 +65,7 @@ model = Model(
     tags={"type": "logistic_regression"},
     type="custom_model",
     properties=properties,
+    #tags={"experiment_name": run_info["experiment_name"]}
 )
 
 registered_model = ml_client.models.create_or_update(model)
