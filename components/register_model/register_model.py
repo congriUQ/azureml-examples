@@ -53,16 +53,24 @@ with open(Path(args.hyperparameters) / "run_info.json") as f:
 # Combine metadata for model registration
 properties = {**run_info, **eval_report, **hyperparams}
 
+# Get parent pipeline job id (this ensures correct lineage)
+parent_job_id = os.environ.get("AZUREML_PARENT_JOB_ID") or os.environ.get("AZUREML_RUN_ID")
+
+# Use azureml://jobs/... URI for lineage
+lineage_path = f"azureml://jobs/{parent_job_id}/outputs/artifacts/paths/model_output/"
+print(lineage_path)
+
 model = Model(
-    path=args.model,
+    path=lineage_path,
     name="logistic_regression",
+    type="custom_model",
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
     properties=properties,
     flavors={
            "sklearn": {"sklearn_version": f"{sklearn.__version__}"},
        },
-    stage="Develop",
+    stage="Development",
 )
 
 registered_model = ml_client.models.create_or_update(model)
