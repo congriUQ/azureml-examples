@@ -19,9 +19,6 @@ parser.add_argument("--parameter_output", type=str, help="Path of output paramet
 
 args = parser.parse_args()
 
-cred = ManagedIdentityCredential()
-token = cred.get_token("https://management.azure.com/.default")
-
 mlflow.sklearn.autolog()
 
 print("hello training world...")
