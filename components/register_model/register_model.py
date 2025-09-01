@@ -59,9 +59,10 @@ model = Model(
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
     properties=properties,
-    job_name=run_info["azureml.run_id"],
-    model_framework='ScikitLearn',
-    model_framework_version=sklearn.__version__,
+    flavors={
+           "sklearn": {"sklearn_version": f"{sklearn.__version__}"},
+       },
+    stage="Develop",
 )
 
 registered_model = ml_client.models.create_or_update(model)
