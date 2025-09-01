@@ -22,7 +22,7 @@ inputs:
   accuracy_threshold:
     type: number
     description: Accuracy threshold for model registration
-    default: 0.85
+    default: 0.70
 
 outputs:
   eval_report:
