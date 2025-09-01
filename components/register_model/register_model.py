@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 
+import mlflow
 from azure.ai.ml import MLClient
 from azure.ai.ml.entities import Model
 from azure.identity import ManagedIdentityCredential
@@ -25,6 +26,8 @@ ml_client = MLClient(
     resource_group_name=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
     workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
 )
+mlflow_tracking_uri = ml_client.workspaces.get(ml_client.workspace_name).mlflow_tracking_uri
+mlflow.set_tracking_uri(mlflow_tracking_uri)
 
 # Load evaluation report
 with open(Path(args.eval_report) / "eval_report.json") as f:

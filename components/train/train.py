@@ -18,6 +18,8 @@ parser.add_argument("--model_output", type=str, help="Path of output model")
 parser.add_argument("--parameter_output", type=str, help="Path of output parameters")
 
 args = parser.parse_args()
+mlflow.sklearn.autolog()
+mlflow.start_run()
 
 print("hello training world...")
 
@@ -29,8 +31,6 @@ lines = [
     f"Model output path: {args.model_output}",
     f"Parameter output path: {args.parameter_output}",
 ]
-
-mlflow.autolog()
 
 for line in lines:
     print(line)

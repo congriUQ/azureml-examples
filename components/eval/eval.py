@@ -2,6 +2,7 @@ import argparse
 import json
 from pathlib import Path
 
+import mlflow
 import numpy as np
 from sklearn.metrics import classification_report
 
@@ -30,6 +31,8 @@ y_pred = np.load(Path(args.scoring_result) / "y_pred.npy")
 
 clf_report = classification_report(y_test, y_pred, output_dict=True)
 print(classification_report(y_test, y_pred))
+
+mlflow.end_run()
 
 with open(Path(args.eval_output) / "eval_report.json", "w") as f:
     json.dump(clf_report, f)
