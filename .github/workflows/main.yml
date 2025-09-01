@@ -53,9 +53,9 @@ jobs:
       run: |
         az ml batch-endpoint invoke --name training-pipeline-endpoint --file invoke_inputs.yml
 
-    - name: Create online endpoint
-      run: |
-        az ml online-endpoint update --file online-endpoint.yml --name juicebase-online-endpoint
+    # - name: Create online endpoint
+    #   run: |
+    #     az ml online-endpoint update --file online-endpoint.yml --name juicebase-online-endpoint
 
     - name: Create online deployment
       run: |

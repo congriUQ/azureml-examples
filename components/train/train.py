@@ -53,22 +53,23 @@ clf.fit(x_train, y_train)
 # with open(model_output_path, "wb") as model_file:
 #     dump(clf, model_file, protocol=5)
 
-os.makedirs(args.model_output, exist_ok=True)
-joblib.dump(clf, os.path.join(args.model_output, "model.pkl"))
-
-# Collect hyperparameters
-hyperparams = {
-    "max_epochs": args.max_epochs,
-    "learning_rate": args.learning_rate,
-    "learning_rate_schedule": args.learning_rate_schedule,
-}
-
 # Force MLflow to use the AzureML tracking URI
 mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
 
 # Start run explicitly (ensures logs attach to current AzureML run)
 with mlflow.start_run() as run:
     run_id = run.info.run_id
+
+    os.makedirs(args.model_output, exist_ok=True)
+    joblib.dump(clf, os.path.join(args.model_output, "model.pkl"))
+
+    # Collect hyperparameters
+    hyperparams = {
+        "max_epochs": args.max_epochs,
+        "learning_rate": args.learning_rate,
+        "learning_rate_schedule": args.learning_rate_schedule,
+    }
+
     for param in hyperparams:
         mlflow.log_param(param, hyperparams[param])
 
