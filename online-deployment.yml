@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: blue
 endpoint_name: juicebase-online-endpoint
-model: azureml:logistic_regression:latest
+model: azureml:logistic_regression:3
 environment: azureml:sklearn_juicebase@latest
 tags:
   project: juicebase-kickoff
