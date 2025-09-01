@@ -6,9 +6,11 @@ from pathlib import Path
 from pickle import dump
 
 import mlflow
+
+MLFLOW_DISABLE_AUTO_REGISTER_MODEL=1
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-from azureml.core import Run
 
 
 parser = argparse.ArgumentParser("train")
@@ -55,6 +57,7 @@ clf.fit(x_train, y_train)
 
 # Force MLflow to use the AzureML tracking URI
 mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
+print(os.environ["MLFLOW_TRACKING_URI"])
 
 # Start run explicitly (ensures logs attach to current AzureML run)
 with mlflow.start_run() as run:
