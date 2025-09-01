@@ -60,6 +60,8 @@ hyperparams = {
     "learning_rate": args.learning_rate,
     "learning_rate_schedule": args.learning_rate_schedule,
 }
+for param in hyperparams:
+    mlflow.log_param(f"{param}", hyperparams[param])
 
 # Save hyperparameters to JSON
 param_output_path = Path(args.parameter_output) / "hyperparams.json"

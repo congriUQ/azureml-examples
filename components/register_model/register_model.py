@@ -26,8 +26,6 @@ ml_client = MLClient(
     resource_group_name=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
     workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
 )
-mlflow_tracking_uri = ml_client.workspaces.get(ml_client.workspace_name).mlflow_tracking_uri
-mlflow.set_tracking_uri(mlflow_tracking_uri)
 
 # Load evaluation report
 with open(Path(args.eval_report) / "eval_report.json") as f:
@@ -46,11 +44,6 @@ if not approve:
 # Load hyperparameters
 with open(Path(args.hyperparameters) / "hyperparams.json") as f:
     hyperparams = json.load(f)
-
-#with mlflow.start_run():
-for param in hyperparams:
-    mlflow.log_param(f"{param}", hyperparams[param])
-mlflow.log_metric("accuracy", accuracy)
 
 # Load run info
 with open(Path(args.hyperparameters) / "run_info.json") as f:
