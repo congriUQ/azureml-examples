@@ -34,6 +34,7 @@ with open(Path(args.eval_report) / "eval_report.json") as f:
     eval_report = json.load(f)
 
 accuracy = eval_report["accuracy"]
+mlflow.log_metric("accuracy", accuracy)
 print(f"Gate check: accuracy={accuracy}, threshold={args.accuracy_threshold}")
 
 # Decide approval
@@ -46,6 +47,9 @@ if not approve:
 # Load hyperparameters
 with open(Path(args.hyperparameters) / "hyperparams.json") as f:
     hyperparams = json.load(f)
+
+for param in hyperparams:
+    mlflow.log_param(f"{param}", hyperparams[param])
 
 # Combine metadata for model registration
 properties = {**eval_report, **hyperparams}
