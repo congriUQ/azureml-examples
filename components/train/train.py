@@ -62,8 +62,16 @@ hyperparams = {
     "learning_rate": args.learning_rate,
     "learning_rate_schedule": args.learning_rate_schedule,
 }
-for param in hyperparams:
-    mlflow.log_param(f"{param}", hyperparams[param])
+
+# Force MLflow to use the AzureML tracking URI
+mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
+
+# Start run explicitly (ensures logs attach to current AzureML run)
+with mlflow.start_run() as run:
+    run_id = run.info.run_id
+    for param in hyperparams:
+        mlflow.log_param(param, hyperparams[param])
+
 
 # Save hyperparameters to JSON
 param_output_path = Path(args.parameter_output) / "hyperparams.json"
@@ -71,11 +79,9 @@ param_output_path.parent.mkdir(parents=True, exist_ok=True)
 with open(param_output_path, "w") as f:
     json.dump(hyperparams, f)
 
-run = Run.get_context()
-print("Experiment:", run.experiment.name)
-print("Run ID:", run.id)
+print("Run ID:", run_id)
 
 # save run info to output so registration step can use it
 run_output_path = Path(args.parameter_output) / "run_info.json"
 with open(run_output_path, "w") as f:
-    f.write(json.dumps({"experiment_name": run.experiment.name, "azureml.run_id": run.id}))
+    f.write(json.dumps({"azureml.run_id": run_id}))
