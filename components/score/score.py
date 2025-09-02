@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 import pickle
 import numpy as np
+import mlflow.sklearn
 
 
 parser = argparse.ArgumentParser("score")
@@ -22,9 +23,10 @@ lines = [
 for line in lines:
     print(line)
 
-model_path = Path(args.model_input) / "model.pkl"
-with open(model_path, "rb") as model_file:
-    model = pickle.load(model_file)
+# model_path = Path(args.model_input) / "model.pkl"
+# with open(model_path, "rb") as model_file:
+#     model = pickle.load(model_file)
+model = mlflow.sklearn.load_model(args.model_input)
 print("Model: ", model)
 
 # score

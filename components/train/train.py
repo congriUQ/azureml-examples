@@ -5,6 +5,7 @@ import joblib
 from pathlib import Path
 from pickle import dump
 
+import mlflow.sklearn
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 
@@ -52,7 +53,10 @@ clf.fit(x_train, y_train)
 #     dump(clf, model_file, protocol=5)
 
 os.makedirs(args.model_output, exist_ok=True)
-joblib.dump(clf, os.path.join(args.model_output, "model.pkl"))
+mlflow.sklearn.save_model(
+    sk_model=clf,
+    path=args.model_output
+)
 
 # Collect hyperparameters
 hyperparams = {

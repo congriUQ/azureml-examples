@@ -55,7 +55,8 @@ jobs:
 
     - name: Create online endpoint
       run: |
-        az ml online-endpoint create --file online-endpoint.yml --name juicebase-online-endpoint
+        az ml online-endpoint update --file online-endpoint.yml --name juicebase-online-endpoint
+        sleep 30
 
     - name: Create online deployment
       run: |
