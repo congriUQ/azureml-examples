@@ -23,18 +23,17 @@ inputs:
     type: number
     description: Accuracy threshold for model registration
     default: 0.70
-outputs:
-  eval_report:
-    type: uri_folder
-    description: The evaluation report
-  parameter_output:   # <-- missing before
-    type: uri_folder
-    description: Hyperparameters JSON
 
 outputs:
   eval_report:
     type: uri_folder
     description: The evaluation report
+  parameter_output:
+    type: uri_folder
+    description: Hyperparameters JSON
+  model_output:
+    type: uri_folder
+    description: MODEL
 
 jobs:
   preprocess:
