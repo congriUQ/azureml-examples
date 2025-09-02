@@ -57,7 +57,7 @@ lineage_path = f"azureml://jobs/{parent_job_id}/outputs/artifacts/paths/model_ou
 print(lineage_path)
 
 model = Model(
-    path=lineage_path,
+    path=args.model,
     name="logistic_regression",
     type="custom_model",
     description="A sample logistic regression model for the Diabetes dataset",
