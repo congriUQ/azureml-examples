@@ -56,8 +56,8 @@ jobs:
       learning_rate: ${{parent.inputs.training_learning_rate}}
       learning_rate_schedule: ${{parent.inputs.learning_rate_schedule}}
     outputs:
-      model_output: model_output
-      parameter_output: parameter_output
+      model_output: {}
+      parameter_output: ${{parent.outputs.parameter_output}}
 
   score_with_sample_data:
     type: pipeline
@@ -77,7 +77,7 @@ jobs:
       scoring_result: ${{parent.jobs.score_with_sample_data.outputs.score_output}}
       test_data: ${{parent.jobs.preprocess.outputs.test_data}}
     outputs:
-      eval_report: eval_report
+      eval_report: ${{parent.outputs.eval_report}}
 
   register_model:
     type: pipeline
