@@ -46,12 +46,8 @@ if not approve:
 with open(Path(args.hyperparameters) / "hyperparams.json") as f:
     hyperparams = json.load(f)
 
-# Load run info
-with open(Path(args.hyperparameters) / "run_info.json") as f:
-    run_info = json.load(f)
-
 # Combine metadata for model registration
-properties = {**run_info, **eval_report, **hyperparams}
+properties = {**eval_report, **hyperparams}
 
 # Get parent pipeline job id (this ensures correct lineage)
 parent_job_id = os.environ.get("AZUREML_PARENT_JOB_ID") or os.environ.get("AZUREML_RUN_ID")
@@ -65,7 +61,7 @@ model = Model(
     name="logistic_regression",
     type="custom_model",
     description="A sample logistic regression model for the Diabetes dataset",
-    tags={"type": "logistic_regression", "experiment_name": run_info["experiment_name"]},
+    tags={"type": "logistic_regression"},
     properties=properties,
     flavors={
            "sklearn": {"sklearn_version": f"{sklearn.__version__}"},
