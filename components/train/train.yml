@@ -18,7 +18,7 @@ inputs:
     default: time-based 
 outputs:
   model_output:
-    type: uri_folder
+    type: mlflow_model
   parameter_output:
     type: uri_folder
 code: .
