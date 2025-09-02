@@ -5,7 +5,7 @@ from pathlib import Path
 
 import mlflow
 from azure.ai.ml import MLClient
-from azure.ai.ml.entities import Model
+from azure.ai.ml.entities import Model, Input
 from azure.identity import ManagedIdentityCredential
 import sklearn
 
@@ -57,7 +57,7 @@ lineage_path = f"azureml://jobs/{parent_job_id}/outputs/model_output/"
 print(lineage_path)
 
 model = Model(
-    path=args.model,
+    path=Input(args.model, type="mlflow_model"),
     name="logistic_regression",
     type="mlflow_model",
     description="A sample logistic regression model for the Diabetes dataset",
