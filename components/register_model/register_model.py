@@ -53,11 +53,11 @@ properties = {**eval_report, **hyperparams}
 parent_job_id = os.environ.get("AZUREML_PARENT_JOB_ID") or os.environ.get("AZUREML_RUN_ID")
 
 # Use azureml://jobs/... URI for lineage
-lineage_path = f"azureml://jobs/{parent_job_id}/outputs/artifacts/paths/model_output/"
+lineage_path = f"azureml://jobs/{parent_job_id}/outputs/model_output/"
 print(lineage_path)
 
 model = Model(
-    path=args.model,
+    path=lineage_path,
     name="logistic_regression",
     type="custom_model",
     description="A sample logistic regression model for the Diabetes dataset",
