@@ -23,6 +23,9 @@ inputs:
     type: number
     description: Accuracy threshold for model registration
     default: 0.70
+  model_output:
+    type: uri_folder
+    description: Model
 
 outputs:
   eval_report:
