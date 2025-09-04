@@ -44,6 +44,7 @@ clf.fit(x_train, y_train)
 
 mlflow.sklearn.save_model(
     sk_model=clf,
+    path="model.pkl",
 )
 # with open("model.pkl", "wb") as f:
 #     dump(clf, f, protocol=5)
