@@ -41,6 +41,7 @@ x_test = scaler.transform(x_test)
 clf = LogisticRegression()
 clf.fit(x_train, y_train)
 
+# Save Model
 mlflow.sklearn.save_model(
     sk_model=clf,
     path="model.pkl",
