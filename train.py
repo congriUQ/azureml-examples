@@ -10,6 +10,7 @@ from azure.identity import ManagedIdentityCredential
 from azure.ai.ml.entities import Model
 from pickle import dump
 import json
+import mlflow
 from azure.ai.ml.entities import ManagedOnlineEndpoint
 from azure.ai.ml.entities import ManagedOnlineDeployment, CodeConfiguration
 
@@ -39,12 +40,18 @@ x_test = scaler.transform(x_test)
 clf = LogisticRegression()
 clf.fit(x_train, y_train)
 
-with open("model.pkl", "wb") as f:
-    dump(clf, f, protocol=5)
+os.makedirs(args.model_output, exist_ok=True)
+mlflow.sklearn.save_model(
+    sk_model=clf,
+)
+# with open("model.pkl", "wb") as f:
+#     dump(clf, f, protocol=5)
 
 # Evaluate
 y_pred = clf.predict(x_test)
-print(classification_report(y_test, y_pred))
+eval = classification_report(y_test, y_pred)
+for p in eval:
+    mlflow.log_param(p, eval[p])
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 cred = ManagedIdentityCredential()
@@ -80,13 +87,15 @@ deployment = ManagedOnlineDeployment(
     name="blue",  # deployment name
     endpoint_name="diabetes-endpoint",
     model=model,
-    environment="azureml:diabetes:5",
+    environment="azureml:sklearn_juicebase@latest",
     code_configuration=CodeConfiguration(
         code="./",  # folder with score.py
         scoring_script="score.py",
     ),
-    instance_type="Standard_D2as_v4",
-    instance_count=1,
+    compute="azureml:DS11v2lp",
+    # settings={"default_compute": "DS11v2lp"},
+    # instance_type="Standard_D2as_v4",
+    # instance_count=1,
 )
 
 
