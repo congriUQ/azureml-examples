@@ -8,7 +8,7 @@ identity:
 environment: azureml:sklearn_juicebase@latest
 command: >-
   python train.py --training_data ${{inputs.training_data}}
-display_name: model-training-diabetes
+display_name: diabetes-job
 code: .
 inputs:
   training_data:

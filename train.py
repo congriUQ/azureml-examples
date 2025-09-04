@@ -23,6 +23,9 @@ args = parser.parse_args()
 
 print(f"args\n\n{args}")
 
+mlflow.start_run()
+mlflow.autolog()
+
 # Load MLTable dataset
 diabetes_dataset = mltable.load(args.training_data).to_pandas_dataframe()
 print(diabetes_dataset.head())
@@ -64,6 +67,8 @@ for metric, value in eval.items():
 display = ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
 display.figure_.savefig("confusion_matrix.png")
 mlflow.log_artifact("confusion_matrix.png")
+
+mlflow.end_run()
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 cred = ManagedIdentityCredential()
