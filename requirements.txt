@@ -1,8 +1,7 @@
 azureml-dataprep[pandas]
 azure-ai-ml==1.27.1
 azure-identity==1.23.0
-mlflow>=2.5.0
-azureml-mlflow>=1.60.0
+azureml-mlflow==1.60.0
 matplotlib
 mltable==1.6.1
 urllib3==2.5.0
