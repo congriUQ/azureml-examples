@@ -62,7 +62,8 @@ for metric, value in eval.items():
         mlflow.log_metric(metric, value)
 
 display = ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
-mlflow.log_figure(display.figure_, "confusion_matrix.png")
+display.figure_.savefig("confusion_matrix.png")
+mlflow.log_artifact("confusion_matrix.png")
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 cred = ManagedIdentityCredential()
