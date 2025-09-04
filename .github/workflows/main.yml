@@ -29,7 +29,7 @@ jobs:
 
     - name: Run sample job
       run: |
-        az ml job create --file training_job.yml
+        az ml job create --file ./training_job.yml
 
     - name: Deploy pipeline components
       run: |
