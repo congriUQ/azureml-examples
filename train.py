@@ -23,9 +23,6 @@ args = parser.parse_args()
 
 print(f"args\n\n{args}")
 
-# Ensure we attach to the AzureML run context
-mlflow.start_run()
-
 # Load MLTable dataset
 diabetes_dataset = mltable.load(args.training_data).to_pandas_dataframe()
 print(diabetes_dataset.head())
@@ -65,8 +62,6 @@ for metric, value in eval.items():
 
 display = ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
 mlflow.log_figure(display.figure_, "confusion_matrix.png")
-
-mlflow.end_run()
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 cred = ManagedIdentityCredential()
