@@ -51,7 +51,7 @@ mlflow.sklearn.save_model(
 
 # Evaluate
 y_pred = clf.predict(x_test)
-eval = classification_report(y_test, y_pred)
+eval = classification_report(y_test, y_pred, output_dict=True)
 for metric in eval:
     mlflow.log_metric(metric, eval[metric])
 
@@ -75,7 +75,7 @@ model = Model(
     description="A sample logistic regression model for the Diabetes dataset",
     tags={"type": "logistic_regression"},
     type="custom_model",
-    properties=classification_report(y_test, y_pred, output_dict=True),
+    properties=eval,
 )
 
 registered_model = ml_client.models.create_or_update(model)
