@@ -27,6 +27,10 @@ jobs:
         az account set --subscription "${{ secrets.CONET_AZURE_SUBSCRIPTION_ID }}"
         az configure --defaults workspace=${{ secrets.JUICEBASE_AML_WORKSPACE }} group=${{ secrets.AZURE_RESOURCE_GROUP }}
 
+    - name: Restore ENV
+      run: |
+        az ml environment restore --name sklearn_juicebase
+    
     - name: Run sample job
       run: |
         az ml job create --file ./training_job.yml --debug
