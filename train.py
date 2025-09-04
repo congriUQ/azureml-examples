@@ -1,6 +1,8 @@
 import os
 import mltable
 import argparse
+import matplotlib.pyplot as plt
+from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -40,7 +42,6 @@ x_test = scaler.transform(x_test)
 clf = LogisticRegression()
 clf.fit(x_train, y_train)
 
-os.makedirs(args.model_output, exist_ok=True)
 mlflow.sklearn.save_model(
     sk_model=clf,
 )
@@ -50,8 +51,11 @@ mlflow.sklearn.save_model(
 # Evaluate
 y_pred = clf.predict(x_test)
 eval = classification_report(y_test, y_pred)
-for p in eval:
-    mlflow.log_param(p, eval[p])
+for metric in eval:
+    mlflow.log_metric(metric, eval[metric])
+
+display = ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
+mlflow.log_figure(display.figure_, "confusion_matrix.png")
 
 print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
 cred = ManagedIdentityCredential()
