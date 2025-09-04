@@ -54,8 +54,14 @@ mlflow.sklearn.save_model(
 # Evaluate
 y_pred = clf.predict(x_test)
 eval = classification_report(y_test, y_pred, output_dict=True)
-for metric in eval:
-    mlflow.log_metric(metric, eval[metric])
+# Log scalar metrics only
+for metric, value in eval.items():
+    if isinstance(value, dict):
+        for sub_metric, sub_value in value.items():
+            if isinstance(sub_value, (int, float)):
+                mlflow.log_metric(f"{metric}_{sub_metric}", sub_value)
+    elif isinstance(value, (int, float)):
+        mlflow.log_metric(metric, value)
 
 display = ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
 mlflow.log_figure(display.figure_, "confusion_matrix.png")
