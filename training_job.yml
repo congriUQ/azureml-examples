@@ -2,10 +2,10 @@ $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 experiment_name: diabetes
 description: "Simple example to show how model training works in AML"
 type: command
-compute: azureml:sA1v2
+compute: azureml:DS11v2lp
 identity:
   type: managed
-environment: azureml:diabetes@latest
+environment: azureml:sklearn_juicebase@latest
 command: >-
   python train.py --training_data ${{inputs.training_data}}
 display_name: model-training-diabetes
