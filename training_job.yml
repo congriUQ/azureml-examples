@@ -1,3 +1,4 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 experiment_name: diabetes
 description: "Simple example to show how model training works in AML"
 type: command
