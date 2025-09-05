@@ -104,7 +104,7 @@ deployment = ManagedOnlineDeployment(
     name="blue",  # deployment name
     endpoint_name="diabetes-endpoint",
     model=model,
-    environment="azureml:sklearn_juicebase@13",
+    environment="azureml:sklearn_juicebase@14",
     code_configuration=CodeConfiguration(
         code="./",  # folder with score.py
         scoring_script="score.py",
@@ -115,6 +115,11 @@ deployment = ManagedOnlineDeployment(
     instance_count=1,
 )
 
+envs = ml_client.environments.list()
+for e in envs:
+    print(e.name, e.version, e.id)
+
+print("Deployment env:", deployment.environment)
 
 print(f"deployment: {deployment}")
 
