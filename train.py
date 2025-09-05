@@ -35,11 +35,13 @@ ml_client = MLClient(
     workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
 )
 
+# can also be solved withour Dockerfile (curated image + conda deps)
 env = Environment(
     name="sklearn_juicebase",
     version="15",
-    docker_file="Dockerfile",
-    build_context="."
+    image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04:20240601.v1",  # curated base
+    conda_file="conda_dependencies.yml",  # your conda spec
+    #build_context="."
 )
 ml_client.environments.create_or_update(env)
 
