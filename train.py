@@ -13,6 +13,7 @@ from azure.ai.ml.entities import Model
 from pickle import dump
 import json
 import mlflow
+from pathlib import Path
 from azure.ai.ml.entities import ManagedOnlineEndpoint
 from azure.ai.ml.entities import ManagedOnlineDeployment, CodeConfiguration
 from azure.ai.ml.entities import Environment
@@ -41,7 +42,7 @@ env = Environment(
     version="15",
     image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04:20240601.v1",  # curated base
     conda_file="conda_dependencies.yml",  # your conda spec
-    build_context="."
+    base_path=str(Path(__file__).parent)  # ensures SDK resolves the file locally
 )
 ml_client.environments.create_or_update(env)
 
