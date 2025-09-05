@@ -15,6 +15,7 @@ import json
 import mlflow
 from azure.ai.ml.entities import ManagedOnlineEndpoint
 from azure.ai.ml.entities import ManagedOnlineDeployment, CodeConfiguration
+from azure.ai.ml.entities import Environment
 
 
 parser = argparse.ArgumentParser()
@@ -22,6 +23,25 @@ parser.add_argument("--training_data", type=str)
 args = parser.parse_args()
 
 print(f"args\n\n{args}")
+
+print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
+cred = ManagedIdentityCredential()
+token = cred.get_token("https://management.azure.com/.default")
+
+ml_client = MLClient(
+    credential=cred,
+    subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
+    resource_group_name=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
+    workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
+)
+
+env = Environment(
+    name="sklearn_juicebase",
+    version="15",
+    conda_file="conda-dependencies.yml",
+    build="Dockerfile"
+)
+ml_client.environments.create_or_update(env)
 
 mlflow.start_run()
 mlflow.autolog()
@@ -70,17 +90,6 @@ display.figure_.savefig("confusion_matrix.png")
 
 mlflow.end_run()
 
-print(f"env:\n\n{json.dumps(dict(os.environ), indent=4)}")
-cred = ManagedIdentityCredential()
-token = cred.get_token("https://management.azure.com/.default")
-
-ml_client = MLClient(
-    credential=cred,
-    subscription_id=os.environ.get("AZUREML_ARM_SUBSCRIPTION"),
-    resource_group_name=os.environ.get("AZUREML_ARM_RESOURCEGROUP"),
-    workspace_name=os.environ.get("AZUREML_ARM_WORKSPACE_NAME"),
-)
-
 model = Model(
     path="./model.pkl",
     name="logistic_regression",
@@ -104,7 +113,7 @@ deployment = ManagedOnlineDeployment(
     name="blue",  # deployment name
     endpoint_name="diabetes-endpoint",
     model=model,
-    environment="azureml:sklearn_juicebase",
+    environment="azureml:sklearn_juicebase@15",
     code_configuration=CodeConfiguration(
         code="./",  # folder with score.py
         scoring_script="score.py",
