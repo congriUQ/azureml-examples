@@ -109,10 +109,10 @@ deployment = ManagedOnlineDeployment(
         code="./",  # folder with score.py
         scoring_script="score.py",
     ),
-    compute="azureml:DS11v2lp",
+    # compute="azureml:DS11v2lp",
     # settings={"default_compute": "DS11v2lp"},
-    # instance_type="Standard_D2as_v4",
-    # instance_count=1,
+    instance_type="Standard_D2as_v4",
+    instance_count=1,
 )
 
 
