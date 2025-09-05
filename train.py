@@ -38,7 +38,7 @@ ml_client = MLClient(
 env = Environment(
     name="sklearn_juicebase",
     version="15",
-    conda_file="conda-dependencies.yml",
+    #conda_file="conda-dependencies.yml",
     build="Dockerfile"
 )
 ml_client.environments.create_or_update(env)
