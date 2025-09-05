@@ -66,7 +66,7 @@ for metric, value in eval.items():
 
 display = ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
 display.figure_.savefig("confusion_matrix.png")
-mlflow.log_artifact("confusion_matrix.png")
+#mlflow.log_artifact("confusion_matrix.png")
 
 mlflow.end_run()
 
