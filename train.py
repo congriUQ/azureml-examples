@@ -41,7 +41,7 @@ env = Environment(
     version="15",
     image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04:20240601.v1",  # curated base
     conda_file="conda_dependencies.yml",  # your conda spec
-    #build_context="."
+    build_context="."
 )
 ml_client.environments.create_or_update(env)
 
